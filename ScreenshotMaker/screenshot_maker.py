@@ -1,5 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
+from SimpleITK.SimpleITK import GetArrayFromImage
 from .utils import (
     sanity_checker_base,
     resample_image,
@@ -39,7 +40,6 @@ class ScreenShotMaker:
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapOverlayImageFilter.html
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
         # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
-        test = 1
 
         input_images = [
             rescale_intensity(resample_image(sitk.ReadImage(image)))
@@ -56,7 +56,22 @@ class ScreenShotMaker:
         else:
             input_masks = None
 
-        test = get_bounding_box(input_images[0], input_masks, self.border_pc)
+        bounding_box = get_bounding_box(input_images[0], input_masks, self.border_pc)
+        print(bounding_box)
+
+        # get the bounded image and masks in the form of arrays
+        input_images_array = [
+            sitk.GetArrayFromImage(image)[bounding_box[0] : bounding_box[1], bounding_box[2] : bounding_box[3], bounding_box[4] : bounding_box[5]]
+            for image in input_images
+        ]
+
+        if self.masks is not None:
+            input_mask_array = [
+                sitk.GetArrayFromImage(image)[bounding_box[0] : bounding_box[1], bounding_box[2] : bounding_box[3], bounding_box[4] : bounding_box[5]]
+                for image in input_masks
+            ]
+        else:
+            input_mask_array = None
 
         test = 1
 
