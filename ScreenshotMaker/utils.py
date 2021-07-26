@@ -38,3 +38,19 @@ def sanity_checker_base(file_reader_base, images_to_check):
             raise ValueError("Spacing for subject are not consistent.")
 
     return True
+
+
+def rescale_intensity(image):
+    """
+    Rescale the intensity of an image.
+
+    Args:
+        image (SimpleITK.Image): The input image.
+
+    Returns:
+        SimpleITK.Image: The rescaled image.
+    """
+    rescaler = sitk.RescaleIntensityImageFilter()
+    rescaler.SetOutputMinimum(0)
+    rescaler.SetOutputMaximum(255)
+    return rescaler.Execute(image)
