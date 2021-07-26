@@ -1,6 +1,11 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-from .utils import sanity_checker_base, resample_image, rescale_intensity
+from .utils import (
+    sanity_checker_base,
+    resample_image,
+    rescale_intensity,
+    get_bounding_box,
+)
 import SimpleITK as sitk
 
 
@@ -42,11 +47,15 @@ class ScreenShotMaker:
 
         if self.masks is not None:
             input_masks = [
-                resample_image(sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor)
+                resample_image(
+                    sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
+                )
                 for mask in self.masks
             ]
         else:
             input_masks = None
+
+        test = get_bounding_box(input_images[0], input_masks)
 
         test = 1
 
