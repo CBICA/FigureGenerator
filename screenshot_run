@@ -35,7 +35,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-mask_opacity",
-        type=str,
+        type=int,
         default=100,
         help="Mask opacity",
         required=False,
@@ -60,6 +60,13 @@ if __name__ == "__main__":
         help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
         required=False,
     )
+    parser.add_argument(
+        "-borderpc",
+        type=float,
+        default=0.05,
+        help="Percentage of size to use as border around bounding box (used only when mask is defined)",
+        required=False,
+    )
 
     parser.add_argument(
         "-v",
@@ -71,7 +78,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     
-    sm = ScreenShotMaker(args.images, args.masks, args.slice, args.mask_opacity)
-    sm.check_validity()
+    sm = ScreenShotMaker(args.images, args.masks, args.slice, args.mask_opacity, args.borderpc)
+    sm.make_screenshot()
 
     print("Finished.")
