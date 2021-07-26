@@ -111,6 +111,17 @@ def resample_image(
 
 
 def get_bounding_box(image, mask_list, border_pc):
+    """
+    Get the bounding box of the image based on the first mask.
+
+    Args:
+        image (SimpleITK.Image): The input image.
+        mask_list (list of SimpleITK.Image): The list of masks.
+        border_pc (float): The percentage of the image size to consider as the border.
+
+    Returns:
+        list: The bounding box in the form of [x_min, x_max, y_min, y_max, z_min, z_max]
+    """
     size = image.GetSize()
     if mask_list is not None:
         extractor = sitk.LabelStatisticsImageFilter()
