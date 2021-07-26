@@ -1,6 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-from .utils import sanity_checker_base, rescale_intensity
+from .utils import sanity_checker_base, resample_image, rescale_intensity
 import SimpleITK as sitk
 
 
@@ -18,9 +18,6 @@ class ScreenShotMaker:
         self.mask_opacity = mask_opacity
 
         ## sanity checker
-        # if a single image and no mask is given, return True
-        if (len(self.images) == 1) and (self.masks is None):
-            return True
         # read the first image and save that for comparison
         file_reader_base = sitk.ImageFileReader()
         file_reader_base.SetFileName(self.images[0])
@@ -38,10 +35,12 @@ class ScreenShotMaker:
         # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
         test = 1
 
-        input_images = [rescale_intensity(sitk.ReadImage(image)) for image in self.images]
+        input_images = [
+            rescale_intensity(resample_image(sitk.ReadImage(image)))
+            for image in self.images
+        ]
 
         test = 1
-
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
