@@ -26,6 +26,7 @@ requirements = [
     "coverage",
     "psutil",
     "medcam",
+    "black",
 ]
 
 setup(
@@ -35,9 +36,7 @@ setup(
     author_email="software@cbica.upenn.edu",
     python_requires=">=3.6",
     packages=find_packages(),
-    scripts=[
-        "screenshot_run"
-    ],
+    scripts=["screenshot_run"],
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Science/Research",
@@ -48,9 +47,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    description=(
-        "Making screenshots for presentations and manuscripts."
-    ),
+    description=("Making screenshots for presentations and manuscripts."),
     install_requires=requirements,
     license="BSD-3-Clause License",
     long_description=readme,
