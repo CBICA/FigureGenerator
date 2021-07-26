@@ -28,10 +28,7 @@ class MultiImageDisplay(object):
         image_list,
         output_dir,
         axis=0,
-        shared_slider=False,
         title_list=None,
-        window_level_list=None,
-        intensity_slider_range_percentile=[2, 98],
         figure_size=(10, 8),
         horizontal=True,
     ):
