@@ -1,6 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-from .utils import sanity_checker_base
+from .utils import sanity_checker_base, rescale_intensity
 import SimpleITK as sitk
 
 
@@ -16,6 +16,7 @@ class ScreenShotMaker:
             self.masks = None
         self.slice_numbers = slice_numbers
         self.mask_opacity = mask_opacity
+        self.check_validity()
 
     def check_validity(self):
         # if a single image and no mask is given, return True
@@ -39,8 +40,11 @@ class ScreenShotMaker:
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
         # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
         test = 1
-        # lambda to perform rescaling of the image
-        rescaler = lambda input: sitk.RescaleIntensityImageFilter(input, 0, 255)
+
+        input_images = [rescale_intensity(sitk.ReadImage(image)) for image in self.images]
+
+        test = 1
+
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
