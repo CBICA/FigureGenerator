@@ -21,8 +21,8 @@ This project helps create screenshots for medical images for use in presentation
 A single PNG:
 - All axes views along the x-axis
 - Show only the image in the first row
-- Second row image and mask overlayed based on opacity
-- Repeat per mask file
+- Second row image and mask overlaid based on opacity
+- Repeat one row per mask file
 
 ### For multiple images
 
