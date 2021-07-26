@@ -10,7 +10,7 @@ import SimpleITK as sitk
 
 
 class ScreenShotMaker:
-    def __init__(self, images, masks=None, slice_numbers=None, mask_opacity=100):
+    def __init__(self, images, masks=None, slice_numbers=None, mask_opacity=100, border_pc=0.05):
 
         # change comma-separated string to list for images and masks
         self.images = images.split(",")
@@ -21,6 +21,7 @@ class ScreenShotMaker:
             self.masks = None
         self.slice_numbers = slice_numbers
         self.mask_opacity = mask_opacity
+        self.border_pc = border_pc
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -55,7 +56,7 @@ class ScreenShotMaker:
         else:
             input_masks = None
 
-        test = get_bounding_box(input_images[0], input_masks)
+        test = get_bounding_box(input_images[0], input_masks, self.border_pc)
 
         test = 1
 
