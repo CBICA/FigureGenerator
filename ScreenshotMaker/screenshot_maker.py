@@ -39,6 +39,8 @@ class ScreenShotMaker:
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
         # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
         test = 1
+        # lambda to perform rescaling of the image
+        rescaler = lambda input: sitk.RescaleIntensityImageFilter(input, 0, 255)
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
