@@ -22,7 +22,7 @@ A single PNG:
 - All axes views along the x-axis
 - Show only the image in the first row
 - Second row image and mask overlaid based on opacity
-- Repeat one row per mask file
+- Repeat one row per mask file 
 
 ### For multiple images
 
