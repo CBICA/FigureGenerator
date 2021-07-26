@@ -16,9 +16,8 @@ class ScreenShotMaker:
             self.masks = None
         self.slice_numbers = slice_numbers
         self.mask_opacity = mask_opacity
-        self.check_validity()
 
-    def check_validity(self):
+        ## sanity checker
         # if a single image and no mask is given, return True
         if (len(self.images) == 1) and (self.masks is None):
             return True
@@ -29,9 +28,7 @@ class ScreenShotMaker:
 
         if sanity_checker_base(file_reader_base, self.images[1:]):
             # only check masks if sanity check for images passes
-            return sanity_checker_base(file_reader_base, self.masks)
-        else:
-            return False
+            sanity_checker_base(file_reader_base, self.masks)
 
     def make_screenshot(self):
         # make the screenshot
