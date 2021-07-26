@@ -66,6 +66,7 @@ if __name__ == "__main__":
     
     sm = ScreenShotMaker(args.images, args.masks, args.slice, args.mask_opacity)
     if not(sm.check_validity()):
+        # print error, though assertion should catch it
         sys.exit("Error: Input images and masks are not co-registered. Please check your input and try again.")
 
     print("Finished.")
