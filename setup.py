@@ -31,7 +31,7 @@ requirements = [
 setup(
     name="ScreenshotMaker",
     version=__version__,
-    author="Jose Agraz, Ujjwal Baid, Megh Bhalerao, Brandon Edwards, Karol Gotkowski, Caleb Grenko, Sarthak Pati, Micah Sheller, Siddhesh Thakur",  # alphabetical order
+    author="Sarthak Pati",  # alphabetical order
     author_email="software@cbica.upenn.edu",
     python_requires=">=3.6",
     packages=find_packages(),
@@ -59,26 +59,3 @@ setup(
     keywords="medical-imaging, screenshot",
     zip_safe=False,
 )
-
-import os
-
-## submodule update
-os.system("git submodule update --init --recursive")
-
-## windows vips installation
-if os.name == "nt":  # proceed for windows
-    from pathlib import Path
-
-    if not Path(
-        "./vips/vips-dev-8.10/bin/libvips-42.dll"
-    ).exists():  # download and extract if main dll is absent
-        print("Downloading and extracting VIPS for Windows")
-        url = "https://github.com/libvips/libvips/releases/download/v8.10.2/vips-dev-w64-all-8.10.2.zip"
-        zip_to_extract = "./vips.zip"
-        import urllib.request, zipfile
-
-        urllib.request.urlretrieve(url, zip_to_extract)
-        z = zipfile.ZipFile(zip_to_extract)
-        z.extractall("./vips")
-        z.close()
-        os.remove(zip_to_extract)
