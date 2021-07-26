@@ -28,6 +28,8 @@ class ScreenShotMaker:
         self.border_pc = args.borderpc
         self.colormap = args.colormap
         self.axis_row = args.axis_row
+        self.tiler = sitk.TileImageFilter()
+        layout = self.tiler.GetLayout()
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -54,7 +56,7 @@ class ScreenShotMaker:
         if self.mask_present:
             input_masks = [
                 resample_image(
-                    sitk.ReadImage(mask), interpolator=sitk.sitkLabelGaussian
+                    sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
                 )
                 for mask in self.masks
             ]
