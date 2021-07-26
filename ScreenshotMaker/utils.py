@@ -79,8 +79,9 @@ def resample_image(
     """
     # initialize spacing to '1' for isotropic
     if spacing is None:
+        spacing = []
         min_org_spacing = min(img.GetSpacing())
-        spacing = [min_org_spacing for _ in img.GetDimension()]
+        spacing = [min_org_spacing for _ in range(0, img.GetDimension())]
     elif len(spacing) != img.GetDimension():
         raise Exception("len(spacing) != " + str(img.GetDimension()))
 
@@ -107,3 +108,13 @@ def resample_image(
         img.GetDirection(),
         outsideValue,
     )
+
+
+def get_bounding_box(image, mask):
+    if mask is not None:
+        extractor = sitk.LabelStatisticsImageFilter()
+        extractor.Execute(image, mask[0])
+        return extractor.GetBoundingBox(1)
+    else:
+        size = image.GetSize()
+        return (0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
