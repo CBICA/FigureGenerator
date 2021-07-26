@@ -37,6 +37,7 @@ class ScreenShotMaker:
         # try one of the following:
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapOverlayImageFilter.html
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
+        # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
         test = 1
 
     def save_screenshot(self, filename):
