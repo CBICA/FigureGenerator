@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, division
-import os, argparse, datetime
+import argparse, datetime
 import ScreenshotMaker as sm
 
 
@@ -28,14 +28,20 @@ if __name__ == "__main__":
     parser.add_argument(
         "-masks",
         type=str,
-        help="Mask files  (comma-separated without any spaces in path and co-registered with images)",
-        required=True,
+        help="Mask files  (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth",
+        required=False,
     )
     parser.add_argument(
         "-output",
         type=str,
         help="Output directory to save intermediate files and model weights",
         required=True,
+    )
+    parser.add_argument(
+        "-slice",
+        type=str,
+        help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
+        required=False,
     )
 
     parser.add_argument(
