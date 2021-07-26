@@ -54,3 +54,56 @@ def rescale_intensity(image):
     rescaler.SetOutputMinimum(0)
     rescaler.SetOutputMaximum(255)
     return rescaler.Execute(image)
+
+
+def resample_image(
+    img, spacing=None, size=None, interpolator=sitk.sitkLinear, outsideValue=0
+):
+    """
+    Resample image to certain spacing and size.
+
+    Args:
+        img (SimpleITK.Image): The input image to resample.
+        spacing (list): List of length 3 indicating the voxel spacing as [x, y, z].
+        size (list, optional): List of length 3 indicating the number of voxels per dim [x, y, z], which will use compute the appropriate size based on the spacing. Defaults to [].
+        interpolator (SimpleITK.InterpolatorEnum, optional): The interpolation type to use. Defaults to SimpleITK.sitkLinear.
+        origin (list, optional): The location in physical space representing the [0,0,0] voxel in the input image.  Defaults to [0,0,0].
+        outsideValue (int, optional): value used to pad are outside image.  Defaults to 0.
+
+    Raises:
+        Exception: Spacing/resolution mismatch.
+        Exception: Size mismatch.
+
+    Returns:
+        SimpleITK.Image: The resampled input image.
+    """
+    # initialize spacing to '1' for isotropic
+    if spacing is None:
+        min_org_spacing = min(img.GetSpacing())
+        spacing = [min_org_spacing for _ in img.GetDimension()]
+    elif len(spacing) != img.GetDimension():
+        raise Exception("len(spacing) != " + str(img.GetDimension()))
+
+    # Set Size
+    if size == None:
+        inSpacing = img.GetSpacing()
+        inSize = img.GetSize()
+        size = [
+            int(math.ceil(inSize[i] * (inSpacing[i] / spacing[i])))
+            for i in range(img.GetDimension())
+        ]
+    else:
+        if len(size) != img.GetDimension():
+            raise Exception("len(size) != " + str(img.GetDimension()))
+
+    # Resample input image
+    return sitk.Resample(
+        img,
+        size,
+        sitk.Transform(),
+        interpolator,
+        img.GetOrigin(),
+        spacing,
+        img.GetDirection(),
+        outsideValue,
+    )
