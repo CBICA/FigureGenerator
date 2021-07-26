@@ -6,6 +6,7 @@ from .utils import perform_sanity_check_on_subject
 class ScreenShotMaker:
     def __init__(self, images, masks=None, slice_numbers=None, mask_opacity=100):
 
+        # change comma-separated string to list for images and masks
         self.images = images.split(",")
         if masks is not None:
             self.masks = masks.split(",")
