@@ -36,15 +36,15 @@ def perform_sanity_check_on_subject(images):
             file_reader_current.ReadImageInformation()
 
             if file_reader_base.GetDimension() != file_reader_current.GetDimension():
-                raise ValueError("Dimensions for Subject are not consistent.")
+                raise ValueError("Dimensions for subject are not consistent.")
 
             if file_reader_base.GetOrigin() != file_reader_current.GetOrigin():
-                raise ValueError("Origin for Subject are not consistent.")
+                raise ValueError("Origin for subject are not consistent.")
 
             if file_reader_base.GetDirection() != file_reader_current.GetDirection():
-                raise ValueError("Orientation for Subject are not consistent.")
+                raise ValueError("Orientation for subject are not consistent.")
 
             if file_reader_base.GetSpacing() != file_reader_current.GetSpacing():
-                raise ValueError("Spacing for Subject are not consistent.")
+                raise ValueError("Spacing for subject are not consistent.")
 
     return True
