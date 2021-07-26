@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, division
-import argparse, datetime
+import argparse, datetime, sys
 import ScreenshotMaker as sm
+from ScreenshotMaker.screenshot_maker import ScreenShotMaker
 
 
 if __name__ == "__main__":
@@ -63,8 +64,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     
-    sm.screenshot_maker(
-        args.data, args.config, args.output, args.train, args.device, args.reset_prv
-    )
+    sm = ScreenShotMaker(args.images, args.masks, args.slice, args.mask_opacity)
+    if not(sm.check_validity()):
+        sys.exit("Error: Input images and masks are not co-registered. Please check your input and try again.")
 
     print("Finished.")
