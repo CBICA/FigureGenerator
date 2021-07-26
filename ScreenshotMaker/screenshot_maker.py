@@ -21,7 +21,7 @@ class ScreenShotMaker:
             self.mask_present = True
         else:
             self.masks = None
-        
+
         # initialize members
         self.slice_numbers = args.slice
         self.mask_opacity = args.mask_opacity
@@ -54,7 +54,7 @@ class ScreenShotMaker:
         if self.mask_present:
             input_masks = [
                 resample_image(
-                    sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
+                    sitk.ReadImage(mask), interpolator=sitk.sitkLabelGaussian
                 )
                 for mask in self.masks
             ]
