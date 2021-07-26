@@ -32,6 +32,13 @@ class ScreenShotMaker:
         else:
             return False
 
+    def make_screenshot(self):
+        # make the screenshot
+        # try one of the following:
+        # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapOverlayImageFilter.html
+        # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
+        test = 1
+
     def save_screenshot(self, filename):
         # save the screenshot to a file
         test = 1
