@@ -38,27 +38,3 @@ def sanity_checker_base(file_reader_base, images_to_check):
             raise ValueError("Spacing for subject are not consistent.")
 
     return True
-
-
-def perform_sanity_check_on_subject(images, masks=None):
-    """
-    This function performs sanity check on a list of images and masks (if present) to ensure presence of consistent header information WITHOUT loading images into memory.
-
-    Args:
-        images (list): List of images paths.
-        masks (list): List of images paths. Defaults to None.
-
-    Returns:
-        bool: True if everything is okay.
-    """
-    if len(images) == 1:
-        return True
-    # read the first image and save that for comparison
-    file_reader_base = sitk.ImageFileReader()
-    file_reader_base.SetFileName(images[0])
-    file_reader_base.ReadImageInformation()
-
-    if sanity_checker_base(file_reader_base, images[1:]):
-        return sanity_checker_base(file_reader_base, masks)
-
-    return True

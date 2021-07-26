@@ -1,6 +1,7 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-from .utils import perform_sanity_check_on_subject
+from .utils import sanity_checker_base
+import SimpleITK as sitk
 
 
 class ScreenShotMaker:
@@ -16,7 +17,19 @@ class ScreenShotMaker:
         self.mask_opacity = mask_opacity
 
     def check_validity(self):
-        return perform_sanity_check_on_subject(self.images, self.masks)
+        # if a single image and no mask is given, return True
+        if (len(self.images) == 1) and (self.masks is None):
+            return True
+        # read the first image and save that for comparison
+        file_reader_base = sitk.ImageFileReader()
+        file_reader_base.SetFileName(self.images[0])
+        file_reader_base.ReadImageInformation()
+
+        if sanity_checker_base(file_reader_base, self.images[1:]):
+            # only check masks if sanity check for images passes
+            return sanity_checker_base(file_reader_base, self.masks)
+        else:
+            return False
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
