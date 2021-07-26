@@ -6,9 +6,10 @@ This project helps create screenshots for medical images for use in presentation
 
 - Image (single or multiple co-registered)
   - for multiple images:
-    - perform sanity check using logic in https://github.com/CBICA/GaNDLF/blob/master/GANDLF/utils.py#L610
+    - perform sanity check 
 - Mask: Optional
   - for multiple masks (in case of showing ground truth and computationally-generated masks), assume first is ground truth
+  - perform sanity check 
 - Mask opacity: Optional (default is 100 - full opacity)
 - Slice number: Optional
   - if not defined and mask is present, binarize the mask (first file if multiple masks are passed) and use the slices with largest area
