@@ -18,8 +18,10 @@ class ScreenShotMaker:
         # change comma-separated string to list for images and masks
         self.images = images.split(",")
         assert len(images) > 0, "Please provide at least one image."
+        self.mask_present = False
         if masks is not None:
             self.masks = masks.split(",")
+            self.mask_present = True
         else:
             self.masks = None
         self.slice_numbers = slice_numbers
@@ -48,7 +50,7 @@ class ScreenShotMaker:
             for image in self.images
         ]
 
-        if self.masks is not None:
+        if self.mask_present:
             input_masks = [
                 resample_image(
                     sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
@@ -71,7 +73,7 @@ class ScreenShotMaker:
             for image in input_images
         ]
 
-        if self.masks is not None:
+        if self.mask_present:
             input_mask_array = [
                 sitk.GetArrayFromImage(image)[
                     bounding_box[0] : bounding_box[1],
