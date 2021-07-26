@@ -11,22 +11,21 @@ import SimpleITK as sitk
 
 
 class ScreenShotMaker:
-    def __init__(
-        self, images, masks=None, slice_numbers=None, mask_opacity=100, border_pc=0.05
-    ):
-
+    def __init__(self, args):
         # change comma-separated string to list for images and masks
-        self.images = images.split(",")
-        assert len(images) > 0, "Please provide at least one image."
+        self.images = args.images.split(",")
+        assert len(args.images) > 0, "Please provide at least one image."
         self.mask_present = False
-        if masks is not None:
-            self.masks = masks.split(",")
+        if args.masks is not None:
+            self.masks = args.masks.split(",")
             self.mask_present = True
         else:
             self.masks = None
-        self.slice_numbers = slice_numbers
-        self.mask_opacity = mask_opacity
-        self.border_pc = border_pc
+        self.slice_numbers = args.slice
+        self.mask_opacity = args.mask_opacity
+        self.border_pc = args.borderpc
+        self.colormap = args.colormap
+        self.axis_row = args.axis_row
 
         ## sanity checker
         # read the first image and save that for comparison
