@@ -1,0 +1,55 @@
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function, division
+import os, argparse, datetime
+import ScreenshotMaker as sm
+
+
+if __name__ == "__main__":
+    copyrightMessage = (
+        "Contact: software@cbica.upenn.edu\n\n"
+        + "This program is NOT FDA/CE approved and NOT intended for clinical use.\nCopyright (c) "
+        + str(datetime.date.today().year)
+        + " University of Pennsylvania. All rights reserved."
+    )
+    parser = argparse.ArgumentParser(
+        prog="ScreenshotMaker",
+        formatter_class=argparse.RawTextHelpFormatter,
+        description="Constructing screenshots from medical images.\n\n"
+        + copyrightMessage,
+    )
+    parser.add_argument(
+        "-images",
+        type=str,
+        help="Input image files (comma-separated without any spaces in path and co-registered)",
+        required=True,
+    )
+    parser.add_argument(
+        "-masks",
+        type=str,
+        help="Mask files  (comma-separated without any spaces in path and co-registered with images)",
+        required=True,
+    )
+    parser.add_argument(
+        "-output",
+        type=str,
+        help="Output directory to save intermediate files and model weights",
+        required=True,
+    )
+
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version="%(prog)s v{}".format(sm.version) + "\n\n" + copyrightMessage,
+        help="Show program's version number and exit.",
+    )
+
+    args = parser.parse_args()
+    
+    sm.screenshot_maker(
+        args.data, args.config, args.output, args.train, args.device, args.reset_prv
+    )
+
+    print("Finished.")
