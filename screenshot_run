@@ -28,7 +28,15 @@ if __name__ == "__main__":
     parser.add_argument(
         "-masks",
         type=str,
+        default=None,
         help="Mask files  (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth",
+        required=False,
+    )
+    parser.add_argument(
+        "-mask_opacity",
+        type=str,
+        default=100,
+        help="Mask opacity",
         required=False,
     )
     parser.add_argument(
@@ -40,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-slice",
         type=str,
+        default=None,
         help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
         required=False,
     )
