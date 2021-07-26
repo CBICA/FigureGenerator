@@ -1,4 +1,4 @@
-import os, sys, math
+import math
 import numpy as np
 import SimpleITK as sitk
 
@@ -110,11 +110,19 @@ def resample_image(
     )
 
 
-def get_bounding_box(image, mask):
-    if mask is not None:
+def get_bounding_box(image, mask_list, border_pc):
+    size = image.GetSize()
+    if mask_list is not None:
         extractor = sitk.LabelStatisticsImageFilter()
-        extractor.Execute(image, mask[0])
-        return extractor.GetBoundingBox(1)
+        extractor.Execute(image, mask_list[0])
+        bb = list(extractor.GetBoundingBox(1))
+        bb[0] = max(0, math.floor(bb[0] - border_pc * size[0]))
+        bb[2] = max(0, math.floor(bb[2] - border_pc * size[1]))
+        bb[4] = max(0, math.floor(bb[4] - border_pc * size[2]))
+        
+        bb[1] = min(size[0], math.floor(bb[1] + border_pc * size[0]))
+        bb[3] = min(size[1], math.floor(bb[3] + border_pc * size[1]))
+        bb[5] = min(size[2], math.floor(bb[5] + border_pc * size[2]))
+        return bb
     else:
-        size = image.GetSize()
         return (0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
