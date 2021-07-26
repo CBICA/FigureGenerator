@@ -130,7 +130,7 @@ def get_bounding_box(image, mask_list, border_pc):
         bb[0] = max(0, math.floor(bb[0] - border_pc * size[0]))
         bb[2] = max(0, math.floor(bb[2] - border_pc * size[1]))
         bb[4] = max(0, math.floor(bb[4] - border_pc * size[2]))
-        
+
         bb[1] = min(size[0], math.floor(bb[1] + border_pc * size[0]))
         bb[3] = min(size[1], math.floor(bb[3] + border_pc * size[1]))
         bb[5] = min(size[2], math.floor(bb[5] + border_pc * size[2]))

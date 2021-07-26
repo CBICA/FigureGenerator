@@ -11,7 +11,9 @@ import SimpleITK as sitk
 
 
 class ScreenShotMaker:
-    def __init__(self, images, masks=None, slice_numbers=None, mask_opacity=100, border_pc=0.05):
+    def __init__(
+        self, images, masks=None, slice_numbers=None, mask_opacity=100, border_pc=0.05
+    ):
 
         # change comma-separated string to list for images and masks
         self.images = images.split(",")
@@ -61,13 +63,21 @@ class ScreenShotMaker:
 
         # get the bounded image and masks in the form of arrays
         input_images_array = [
-            sitk.GetArrayFromImage(image)[bounding_box[0] : bounding_box[1], bounding_box[2] : bounding_box[3], bounding_box[4] : bounding_box[5]]
+            sitk.GetArrayFromImage(image)[
+                bounding_box[0] : bounding_box[1],
+                bounding_box[2] : bounding_box[3],
+                bounding_box[4] : bounding_box[5],
+            ]
             for image in input_images
         ]
 
         if self.masks is not None:
             input_mask_array = [
-                sitk.GetArrayFromImage(image)[bounding_box[0] : bounding_box[1], bounding_box[2] : bounding_box[3], bounding_box[4] : bounding_box[5]]
+                sitk.GetArrayFromImage(image)[
+                    bounding_box[0] : bounding_box[1],
+                    bounding_box[2] : bounding_box[3],
+                    bounding_box[4] : bounding_box[5],
+                ]
                 for image in input_masks
             ]
         else:
