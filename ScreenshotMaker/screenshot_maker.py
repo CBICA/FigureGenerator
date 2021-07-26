@@ -40,6 +40,14 @@ class ScreenShotMaker:
             for image in self.images
         ]
 
+        if self.masks is not None:
+            input_masks = [
+                resample_image(sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor)
+                for mask in self.masks
+            ]
+        else:
+            input_masks = None
+
         test = 1
 
     def save_screenshot(self, filename):
