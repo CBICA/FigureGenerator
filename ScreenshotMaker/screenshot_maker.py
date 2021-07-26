@@ -7,11 +7,9 @@ import SimpleITK as sitk
 class ScreenShotMaker:
     def __init__(self, images, masks=None, slice_numbers=None, mask_opacity=100):
 
-        assert images is not None, "Please provide at least one image."
-        assert len(images) > 0, "Please provide at least one image."
-
         # change comma-separated string to list for images and masks
         self.images = images.split(",")
+        assert len(images) > 0, "Please provide at least one image."
         if masks is not None:
             self.masks = masks.split(",")
         else:
