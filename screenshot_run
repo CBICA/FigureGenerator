@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     
-    sm = ScreenShotMaker(args.images, args.masks, args.slice, args.mask_opacity, args.borderpc)
+    sm = ScreenShotMaker(args)
     sm.make_screenshot()
 
     print("Finished.")
