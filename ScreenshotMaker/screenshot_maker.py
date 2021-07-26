@@ -21,6 +21,8 @@ class ScreenShotMaker:
             self.mask_present = True
         else:
             self.masks = None
+        
+        # initialize members
         self.slice_numbers = args.slice
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
