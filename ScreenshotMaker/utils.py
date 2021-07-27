@@ -143,4 +143,7 @@ def get_bounding_box(image, mask_list, border_pc):
         bb[5] = min(size[2], math.floor(bb[5] + border_pc * size[2]))
         return bb
     else:
-        return (0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
+        if len(size) == 3:
+            return (0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
+        elif len(size) == 2:
+            return (0, size[0] - 1, 0, size[1] - 1)
