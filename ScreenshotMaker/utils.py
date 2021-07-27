@@ -170,6 +170,8 @@ def alpha_blend(image, mask=None, alpha=0.5):
     else:
         mask = sitk.Cast(mask, sitk.sitkFloat32)
 
+    overlay_color_img = sitk.ScalarToRGBColormap(mask, sitk.ScalarToRGBColormapImageFilter.Jet)
+
     components_per_pixel = image.GetNumberOfComponentsPerPixel()
     if components_per_pixel > 1:
         img = sitk.Cast(image, sitk.sitkVectorFloat32)
@@ -177,11 +179,11 @@ def alpha_blend(image, mask=None, alpha=0.5):
         img = sitk.Cast(image, sitk.sitkFloat32)
 
     if components_per_pixel == 1:
-        return mask * image
+        return alpha * mask * img
     else:
         return sitk.Compose(
             [
-                mask * sitk.VectorIndexSelectionCast(image, channel)
+                alpha * mask * sitk.VectorIndexSelectionCast(img, channel)
                 for channel in range(components_per_pixel)
             ]
         )
