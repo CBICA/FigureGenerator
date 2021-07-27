@@ -147,3 +147,39 @@ def get_bounding_box(image, mask_list, border_pc):
             return (0, size[0] - 1, 0, size[1] - 1, 0, size[2] - 1)
         elif len(size) == 2:
             return (0, size[0] - 1, 0, size[1] - 1)
+
+
+def alpha_blend(image, mask=None, alpha=0.5):
+    """
+    Alpha blend an image and a mask with specified opacity.
+
+    Args:
+        image (SimpleITK.Image): The input image.
+        mask (SimpleITK.Image): The input mask. Defaults to None.
+        alpha (float): The alpha value to use. Defaults to 0.5.
+
+    Returns:
+        list: The bounding box in the form of [x_min, x_max, y_min, y_max, z_min, z_max]
+    """
+
+    if not mask:
+        mask = sitk.Image(image.GetSize(), sitk.sitkFloat32) + 1.0
+        mask.CopyInformation(image)
+    else:
+        mask = sitk.Cast(mask, sitk.sitkFloat32)
+
+    components_per_pixel = image.GetNumberOfComponentsPerPixel()
+    if components_per_pixel > 1:
+        img = sitk.Cast(image, sitk.sitkVectorFloat32)
+    else:
+        img = sitk.Cast(image, sitk.sitkFloat32)
+
+    if components_per_pixel == 1:
+        return mask * image
+    else:
+        return sitk.Compose(
+            [
+                mask * sitk.VectorIndexSelectionCast(image, channel)
+                for channel in range(components_per_pixel)
+            ]
+        )
