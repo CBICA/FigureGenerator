@@ -99,6 +99,7 @@ class ScreenShotMaker:
                 ]
                 for image in input_images
             ]
+            self.2d_image = True
 
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
@@ -131,7 +132,7 @@ class ScreenShotMaker:
                     max_id[0] = xid
 
             max_nonzero = 0
-            for yid in range(self.input_mask_array[0].shape[1]):  # for each x-axis
+            for yid in range(self.input_mask_array[0].shape[1]):  # for each y-axis
                 current_slice = self.input_mask_array[0][:, yid, :]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
@@ -139,7 +140,7 @@ class ScreenShotMaker:
                     max_id[1] = yid
 
             max_nonzero = 0
-            for zid in range(self.input_mask_array[0].shape[2]):  # for each x-axis
+            for zid in range(self.input_mask_array[0].shape[2]):  # for each z-axis
                 current_slice = self.input_mask_array[0][:, :, zid]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
