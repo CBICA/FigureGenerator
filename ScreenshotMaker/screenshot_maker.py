@@ -46,7 +46,7 @@ class ScreenShotMaker:
         if sanity_checker_base(file_reader_base, self.images[1:]):
             # only check masks if sanity check for images passes
             sanity_checker_base(file_reader_base, self.masks)
-        
+
         self.read_images_and_store_arrays()
 
     def read_images_and_store_arrays(self):
@@ -99,7 +99,7 @@ class ScreenShotMaker:
                 ]
                 for image in input_images
             ]
-            self.2d_image = True
+            self.image_is_2d = True
 
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
@@ -150,9 +150,14 @@ class ScreenShotMaker:
         else:
             self.input_mask_array = None
             # if mask is not defined, pick the middle of the array
-            max_id = np.around(np.true_divide(self.input_images_array[0].shape, 2)).tolist()
-        
+            max_id = np.around(
+                np.true_divide(self.input_images_array[0].shape, 2)
+            ).tolist()
+
         self.max_id = max_id
+
+    def get_image_to_write(self):
+        test = 1
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
