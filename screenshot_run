@@ -53,13 +53,14 @@ if __name__ == "__main__":
         help="Output directory to save intermediate files and model weights",
         required=True,
     )
-    parser.add_argument(
-        "-slice",
-        type=str,
-        default=None,
-        help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
-        required=False,
-    )
+    ## this is problematic because these numbers will need to be translated after resampling the image
+    # parser.add_argument(
+    #     "-slice",
+    #     type=str,
+    #     default=None,
+    #     help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
+    #     required=False,
+    # )
     parser.add_argument(
         "-borderpc",
         type=float,
