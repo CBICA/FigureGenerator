@@ -186,6 +186,11 @@ class ScreenShotMaker:
         mask_slices = None
         if self.input_masks_array is not None:
             mask_slices = self.get_image_and_mask_slices(self.input_masks_array)
+        else:
+            mask_slices = [
+                [None] * len(slice)
+                for slice in image_slices
+            ]
 
         test = 1
 
