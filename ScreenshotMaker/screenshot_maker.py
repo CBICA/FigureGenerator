@@ -152,9 +152,11 @@ class ScreenShotMaker:
         else:
             self.input_masks_array = None
             # if mask is not defined, pick the middle of the array
-            max_id = np.around(
-                np.true_divide(self.input_images_array[0].shape, 2)
-            ).astype(int).tolist()
+            max_id = (
+                np.around(np.true_divide(self.input_images_array[0].shape, 2))
+                .astype(int)
+                .tolist()
+            )
 
         self.max_id = max_id
         self.get_image_to_write()
