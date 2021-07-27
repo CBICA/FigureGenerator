@@ -62,13 +62,6 @@ if __name__ == "__main__":
     #     required=False,
     # )
     parser.add_argument(
-        "-borderpc",
-        type=float,
-        default=0.05,
-        help="Percentage of size to use as border around bounding box (used only when mask is defined)",
-        required=False,
-    )
-    parser.add_argument(
         "-axis_row",
         type=bool,
         default=True,
@@ -80,6 +73,13 @@ if __name__ == "__main__":
         type=bool,
         default=False,
         help="Construct bounding box around binarized ground truth",
+        required=False,
+    )
+    parser.add_argument(
+        "-borderpc",
+        type=float,
+        default=0.05,
+        help="Percentage of size to use as border around bounding box (used only when mask and bounded are defined)",
         required=False,
     )
 
