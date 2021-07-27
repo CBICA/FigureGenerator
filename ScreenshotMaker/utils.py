@@ -153,6 +153,8 @@ def alpha_blend(image, mask=None, alpha=0.5):
     """
     Alpha blend an image and a mask with specified opacity.
 
+    Adapted from https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
+
     Args:
         image (SimpleITK.Image): The input image.
         mask (SimpleITK.Image): The input mask. Defaults to None.
