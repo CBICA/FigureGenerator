@@ -61,6 +61,7 @@ class ScreenShotMaker:
             for image in self.images
         ]
 
+        input_masks = None
         if self.mask_present:
             input_masks = [
                 resample_image(
@@ -68,8 +69,6 @@ class ScreenShotMaker:
                 )
                 for mask in self.masks
             ]
-        else:
-            input_masks = None
 
         ## 3d-specific calculations start here.
         if self.calculate_bounds:
@@ -105,7 +104,7 @@ class ScreenShotMaker:
 
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
-                self.input_mask_array = [
+                self.input_masks_array = [
                     np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                         bounding_box[0] : bounding_box[1],
                         bounding_box[2] : bounding_box[3],
@@ -114,7 +113,7 @@ class ScreenShotMaker:
                     for image in input_masks
                 ]
             elif len(input_images[0].GetSize()) == 2:
-                self.input_mask_array = [
+                self.input_masks_array = [
                     sitk.GetArrayFromImage(image)[
                         bounding_box[0] : bounding_box[1],
                         bounding_box[2] : bounding_box[3],
@@ -126,16 +125,16 @@ class ScreenShotMaker:
             # loop over each axis and get index with largest area
             max_nonzero = 0
             max_id = [0, 0, 0]
-            for xid in range(self.input_mask_array[0].shape[0]):  # for each x-axis
-                current_slice = self.input_mask_array[0][xid, :, :]
+            for xid in range(self.input_masks_array[0].shape[0]):  # for each x-axis
+                current_slice = self.input_masks_array[0][xid, :, :]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
                     current_nonzero = max_nonzero
                     max_id[0] = xid
 
             max_nonzero = 0
-            for yid in range(self.input_mask_array[0].shape[1]):  # for each y-axis
-                current_slice = self.input_mask_array[0][:, yid, :]
+            for yid in range(self.input_masks_array[0].shape[1]):  # for each y-axis
+                current_slice = self.input_masks_array[0][:, yid, :]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
                     current_nonzero = max_nonzero
@@ -143,21 +142,22 @@ class ScreenShotMaker:
 
             if not (self.image_is_2d):
                 max_nonzero = 0
-                for zid in range(self.input_mask_array[0].shape[2]):  # for each z-axis
-                    current_slice = self.input_mask_array[0][:, :, zid]
+                for zid in range(self.input_masks_array[0].shape[2]):  # for each z-axis
+                    current_slice = self.input_masks_array[0][:, :, zid]
                     current_nonzero = np.count_nonzero(current_slice)
                     if current_nonzero > max_nonzero:
                         current_nonzero = max_nonzero
                         max_id[2] = zid
 
         else:
-            self.input_mask_array = None
+            self.input_masks_array = None
             # if mask is not defined, pick the middle of the array
             max_id = np.around(
                 np.true_divide(self.input_images_array[0].shape, 2)
-            ).tolist()
+            ).astype(int).tolist()
 
         self.max_id = max_id
+        self.get_image_to_write()
 
     def get_image_and_mask_slices(self, array_list):
         """
@@ -181,7 +181,9 @@ class ScreenShotMaker:
 
     def get_image_to_write(self):
         image_slices = self.get_image_and_mask_slices(self.input_images_array)
-        mask_slices = self.get_image_and_mask_slices(self.input_masks_array)
+        mask_slices = None
+        if self.input_masks_array is not None:
+            mask_slices = self.get_image_and_mask_slices(self.input_masks_array)
 
         test = 1
 
