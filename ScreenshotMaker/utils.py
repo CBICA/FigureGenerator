@@ -149,7 +149,7 @@ def get_bounding_box(image, mask_list, border_pc):
             return (0, size[0] - 1, 0, size[1] - 1)
 
 
-def alpha_blend(image, mask=None, alpha=0.5):
+def alpha_blend(image, mask=None, alpha=0.5, colormap="jet"):
     """
     Alpha blend an image and a mask with specified opacity.
 
@@ -164,13 +164,29 @@ def alpha_blend(image, mask=None, alpha=0.5):
         list: The bounding box in the form of [x_min, x_max, y_min, y_max, z_min, z_max]
     """
 
+    colomap_lut = {
+        "red": sitk.ScalarToRGBColormapImageFilter.Red,
+        "green": sitk.ScalarToRGBColormapImageFilter.Green,
+        "blue": sitk.ScalarToRGBColormapImageFilter.Blue,
+        "grey": sitk.ScalarToRGBColormapImageFilter.Grey,
+        "hot": sitk.ScalarToRGBColormapImageFilter.Hot,
+        "cool": sitk.ScalarToRGBColormapImageFilter.Cool,
+        "spring": sitk.ScalarToRGBColormapImageFilter.Spring,
+        "summer": sitk.ScalarToRGBColormapImageFilter.Summer,
+        "autumn": sitk.ScalarToRGBColormapImageFilter.Autumn,
+        "winter": sitk.ScalarToRGBColormapImageFilter.Winter,
+        "copper": sitk.ScalarToRGBColormapImageFilter.Copper,
+        "jet": sitk.ScalarToRGBColormapImageFilter.Jet,
+        "hsv": sitk.ScalarToRGBColormapImageFilter.HSV,
+        "overunder": sitk.ScalarToRGBColormapImageFilter.OverUnder,
+    }
+
     if not mask:
         mask = sitk.Image(image.GetSize(), sitk.sitkFloat32) + 1.0
         mask.CopyInformation(image)
     else:
         mask = sitk.Cast(mask, sitk.sitkFloat32)
-
-    overlay_color_img = sitk.ScalarToRGBColormap(mask, sitk.ScalarToRGBColormapImageFilter.Jet)
+        mask = sitk.ScalarToRGBColormap(mask, colomap_lut[colormap])
 
     components_per_pixel = image.GetNumberOfComponentsPerPixel()
     if components_per_pixel > 1:
