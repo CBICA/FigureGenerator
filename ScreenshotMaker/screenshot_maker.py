@@ -46,8 +46,10 @@ class ScreenShotMaker:
         if sanity_checker_base(file_reader_base, self.images[1:]):
             # only check masks if sanity check for images passes
             sanity_checker_base(file_reader_base, self.masks)
+        
+        self.read_images_and_store_arrays()
 
-    def make_screenshot(self):
+    def read_images_and_store_arrays(self):
         # make the screenshot
         # try one of the following:
         # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapOverlayImageFilter.html
@@ -80,7 +82,7 @@ class ScreenShotMaker:
 
         # get the bounded image and masks in the form of arrays
         if len(input_images[0].GetSize()) == 3:
-            input_images_array = [
+            self.input_images_array = [
                 np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                     bounding_box[0] : bounding_box[1],
                     bounding_box[2] : bounding_box[3],
@@ -89,7 +91,7 @@ class ScreenShotMaker:
                 for image in input_images
             ]
         elif len(input_images[0].GetSize()) == 2:
-            input_images_array = [
+            self.input_images_array = [
                 sitk.GetArrayFromImage(image)[
                     bounding_box[0] : bounding_box[1],
                     bounding_box[2] : bounding_box[3],
@@ -100,7 +102,7 @@ class ScreenShotMaker:
 
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
-                input_mask_array = [
+                self.input_mask_array = [
                     np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                         bounding_box[0] : bounding_box[1],
                         bounding_box[2] : bounding_box[3],
@@ -109,7 +111,7 @@ class ScreenShotMaker:
                     for image in input_masks
                 ]
             elif len(input_images[0].GetSize()) == 2:
-                input_mask_array = [
+                self.input_mask_array = [
                     sitk.GetArrayFromImage(image)[
                         bounding_box[0] : bounding_box[1],
                         bounding_box[2] : bounding_box[3],
@@ -121,35 +123,35 @@ class ScreenShotMaker:
             # loop over each axis and get index with largest area
             max_nonzero = 0
             max_id = [0, 0, 0]
-            for xid in range(input_mask_array[0].shape[0]):  # for each x-axis
-                current_slice = input_mask_array[0][xid, :, :]
+            for xid in range(self.input_mask_array[0].shape[0]):  # for each x-axis
+                current_slice = self.input_mask_array[0][xid, :, :]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
                     current_nonzero = max_nonzero
                     max_id[0] = xid
 
             max_nonzero = 0
-            for yid in range(input_mask_array[0].shape[1]):  # for each x-axis
-                current_slice = input_mask_array[0][:, yid, :]
+            for yid in range(self.input_mask_array[0].shape[1]):  # for each x-axis
+                current_slice = self.input_mask_array[0][:, yid, :]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
                     current_nonzero = max_nonzero
                     max_id[1] = yid
 
             max_nonzero = 0
-            for zid in range(input_mask_array[0].shape[2]):  # for each x-axis
-                current_slice = input_mask_array[0][:, :, zid]
+            for zid in range(self.input_mask_array[0].shape[2]):  # for each x-axis
+                current_slice = self.input_mask_array[0][:, :, zid]
                 current_nonzero = np.count_nonzero(current_slice)
                 if current_nonzero > max_nonzero:
                     current_nonzero = max_nonzero
                     max_id[2] = zid
 
         else:
-            input_mask_array = None
+            self.input_mask_array = None
             # if mask is not defined, pick the middle of the array
-            max_id = np.around(np.true_divide(input_images_array[0].shape, 2)).tolist()
-
-        test = 1
+            max_id = np.around(np.true_divide(self.input_images_array[0].shape, 2)).tolist()
+        
+        self.max_id = max_id
 
     def save_screenshot(self, filename):
         # save the screenshot to a file
