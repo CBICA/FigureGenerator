@@ -90,16 +90,18 @@ class ScreenShotMaker:
                 ]
                 for image in input_images
             ]
+            self.image_is_2d = False
         elif len(input_images[0].GetSize()) == 2:
-            self.input_images_array = [
-                sitk.GetArrayFromImage(image)[
-                    bounding_box[0] : bounding_box[1],
-                    bounding_box[2] : bounding_box[3],
-                    :,
-                ]
-                for image in input_images
-            ]
-            self.image_is_2d = True
+            raise NotImplementedError("2D not yet supported")
+            # self.input_images_array = [
+            #     sitk.GetArrayFromImage(image)[
+            #         bounding_box[0] : bounding_box[1],
+            #         bounding_box[2] : bounding_box[3],
+            #         :,
+            #     ]
+            #     for image in input_images
+            # ]
+            # self.image_is_2d = True
 
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
@@ -139,13 +141,14 @@ class ScreenShotMaker:
                     current_nonzero = max_nonzero
                     max_id[1] = yid
 
-            max_nonzero = 0
-            for zid in range(self.input_mask_array[0].shape[2]):  # for each z-axis
-                current_slice = self.input_mask_array[0][:, :, zid]
-                current_nonzero = np.count_nonzero(current_slice)
-                if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
-                    max_id[2] = zid
+            if not(self.image_is_2d):
+                max_nonzero = 0
+                for zid in range(self.input_mask_array[0].shape[2]):  # for each z-axis
+                    current_slice = self.input_mask_array[0][:, :, zid]
+                    current_nonzero = np.count_nonzero(current_slice)
+                    if current_nonzero > max_nonzero:
+                        current_nonzero = max_nonzero
+                        max_id[2] = zid
 
         else:
             self.input_mask_array = None
@@ -156,7 +159,19 @@ class ScreenShotMaker:
 
         self.max_id = max_id
 
+    def get_image_and_mask_slices(self, array_list):
+        output_slices = []
+        for array in array_list:
+            current_image_slices = []
+            if not(self.image_is_2d):
+                current_image_slices.append(array[self.max_id[0], :, :])
+                current_image_slices.append(array[:, self.max_id[1], :])
+                current_image_slices.append(array[:, :, self.max_id[2]])
+            output_slices.append(current_image_slices)
+    
     def get_image_to_write(self):
+        image_slices, mask_slices = self.get_image_and_mask_slices(self.input_images_array), self.get_image_and_mask_slices(self.input_masks_array)
+        
         test = 1
 
     def save_screenshot(self, filename):
