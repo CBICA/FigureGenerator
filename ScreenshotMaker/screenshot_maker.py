@@ -79,24 +79,44 @@ class ScreenShotMaker:
         print(bounding_box)
 
         # get the bounded image and masks in the form of arrays
-        input_images_array = [
-            np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
-                bounding_box[0] : bounding_box[1],
-                bounding_box[2] : bounding_box[3],
-                bounding_box[4] : bounding_box[5],
-            ]
-            for image in input_images
-        ]
-
-        if self.mask_present:
-            input_mask_array = [
+        if len(input_images[0].GetSize()) == 3:
+            input_images_array = [
                 np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                     bounding_box[0] : bounding_box[1],
                     bounding_box[2] : bounding_box[3],
                     bounding_box[4] : bounding_box[5],
                 ]
-                for image in input_masks
+                for image in input_images
             ]
+        elif len(input_images[0].GetSize()) == 2:
+            input_images_array = [
+                sitk.GetArrayFromImage(image)[
+                    bounding_box[0] : bounding_box[1],
+                    bounding_box[2] : bounding_box[3],
+                    :,
+                ]
+                for image in input_images
+            ]
+
+        if self.mask_present:
+            if len(input_images[0].GetSize()) == 3:
+                input_mask_array = [
+                    np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
+                        bounding_box[0] : bounding_box[1],
+                        bounding_box[2] : bounding_box[3],
+                        bounding_box[4] : bounding_box[5],
+                    ]
+                    for image in input_masks
+                ]
+            elif len(input_images[0].GetSize()) == 2:
+                input_mask_array = [
+                    sitk.GetArrayFromImage(image)[
+                        bounding_box[0] : bounding_box[1],
+                        bounding_box[2] : bounding_box[3],
+                        :,
+                    ]
+                    for image in input_masks
+                ]
 
             # loop over each axis and get index with largest area
             max_nonzero = 0
