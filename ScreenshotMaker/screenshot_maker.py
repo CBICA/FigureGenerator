@@ -28,6 +28,7 @@ class ScreenShotMaker:
         self.border_pc = args.borderpc
         self.colormap = args.colormap
         self.axis_row = args.axis_row
+        self.calculate_bounds = args.bounded
         self.tiler = sitk.TileImageFilter()
         layout = self.tiler.GetLayout()
 
@@ -63,7 +64,10 @@ class ScreenShotMaker:
         else:
             input_masks = None
 
-        bounding_box = get_bounding_box(input_images[0], input_masks, self.border_pc)
+        if self.calculate_bounds:
+            bounding_box = get_bounding_box(input_images[0], input_masks, self.border_pc)
+        else:
+            bounding_box = get_bounding_box(input_images[0], None, self.border_pc)
         print(bounding_box)
 
         # get the bounded image and masks in the form of arrays

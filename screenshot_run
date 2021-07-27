@@ -74,6 +74,13 @@ if __name__ == "__main__":
         help="Put all axes views in a single row, defaults to True",
         required=False,
     )
+    parser.add_argument(
+        "-bounded",
+        type=bool,
+        default=False,
+        help="Construct bounding box around binarized ground truth",
+        required=False,
+    )
 
     parser.add_argument(
         "-v",
