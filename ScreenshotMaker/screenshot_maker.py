@@ -8,6 +8,7 @@ from .utils import (
     get_bounding_box,
 )
 import SimpleITK as sitk
+import numpy as np
 
 
 class ScreenShotMaker:
@@ -65,14 +66,16 @@ class ScreenShotMaker:
             input_masks = None
 
         if self.calculate_bounds:
-            bounding_box = get_bounding_box(input_images[0], input_masks, self.border_pc)
+            bounding_box = get_bounding_box(
+                input_images[0], input_masks, self.border_pc
+            )
         else:
             bounding_box = get_bounding_box(input_images[0], None, self.border_pc)
         print(bounding_box)
 
         # get the bounded image and masks in the form of arrays
         input_images_array = [
-            sitk.GetArrayFromImage(image)[
+            np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                 bounding_box[0] : bounding_box[1],
                 bounding_box[2] : bounding_box[3],
                 bounding_box[4] : bounding_box[5],
@@ -82,13 +85,40 @@ class ScreenShotMaker:
 
         if self.mask_present:
             input_mask_array = [
-                sitk.GetArrayFromImage(image)[
+                np.swapaxes(sitk.GetArrayFromImage(image), 0, 2)[
                     bounding_box[0] : bounding_box[1],
                     bounding_box[2] : bounding_box[3],
                     bounding_box[4] : bounding_box[5],
                 ]
                 for image in input_masks
             ]
+
+            # loop over each axis and get index with largest area
+            max_nonzero = 0
+            max_id = [0, 0, 0]
+            for xid in range(input_mask_array[0].shape[0]):  # for each x-axis
+                current_slice = input_mask_array[0][xid, :, :]
+                current_nonzero = np.count_nonzero(current_slice)
+                if current_nonzero > max_nonzero:
+                    current_nonzero = max_nonzero
+                    max_id[0] = xid
+
+            max_nonzero = 0
+            for yid in range(input_mask_array[0].shape[1]):  # for each x-axis
+                current_slice = input_mask_array[0][:, yid, :]
+                current_nonzero = np.count_nonzero(current_slice)
+                if current_nonzero > max_nonzero:
+                    current_nonzero = max_nonzero
+                    max_id[1] = yid
+
+            max_nonzero = 0
+            for zid in range(input_mask_array[0].shape[2]):  # for each x-axis
+                current_slice = input_mask_array[0][:, :, zid]
+                current_nonzero = np.count_nonzero(current_slice)
+                if current_nonzero > max_nonzero:
+                    current_nonzero = max_nonzero
+                    max_id[2] = zid
+
         else:
             input_mask_array = None
 
