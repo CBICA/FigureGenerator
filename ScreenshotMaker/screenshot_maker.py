@@ -31,7 +31,7 @@ class ScreenShotMaker:
         #     self.slice_numbers = None
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
-        self.colormap = args.colormap
+        self.colormap = args.colormap.lower()
         self.axis_row = args.axis_row
         self.calculate_bounds = args.bounded
         self.tiler = sitk.TileImageFilter()
