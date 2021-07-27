@@ -35,7 +35,6 @@ class ScreenShotMaker:
         self.axis_row = args.axis_row
         self.calculate_bounds = args.bounded
         self.tiler = sitk.TileImageFilter()
-        layout = self.tiler.GetLayout()
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -76,7 +75,7 @@ class ScreenShotMaker:
                 input_images[0], input_masks, self.border_pc
             )
         else:
-            bounding_box = get_bounding_box(input_images[0], None, self.border_pc)
+            bounding_box = get_bounding_box(input_images[0], None, None)
         print(bounding_box)
 
         # get the bounded image and masks in the form of arrays
@@ -195,7 +194,7 @@ class ScreenShotMaker:
             current_images = []
             for i in range(len(image_slice)):
                 image = sitk.GetImageFromArray(image_slice[i])
-                image = sitk.Compose(image, image, image)
+                # image = sitk.Compose(image, image, image)
 
                 current_images.append(alpha_blend(image, None))
 
@@ -207,12 +206,12 @@ class ScreenShotMaker:
                 current_images = []
                 for i in range(len(image_slice)):
                     image = sitk.GetImageFromArray(image_slice[i])
-                    image = sitk.Compose(image, image, image)
+                    # image = sitk.Compose(image, image, image)
 
                     mask = None
                     if mask_slice[i] is not None:
-                        mask = sitk.GetImageFromArray(mask_slice[i])
-                        mask = sitk.Compose(mask, mask, mask)
+                        mask = rescale_intensity(sitk.GetImageFromArray(mask_slice[i]))
+                        # mask = sitk.Compose(mask, mask, mask)
 
                     current_images.append(alpha_blend(image, mask))
 
