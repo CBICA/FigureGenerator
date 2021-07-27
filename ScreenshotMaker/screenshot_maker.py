@@ -160,6 +160,15 @@ class ScreenShotMaker:
         self.max_id = max_id
 
     def get_image_and_mask_slices(self, array_list):
+        """
+        Function to get the image and mask slices from the input array.
+
+        Args:
+            array_list (list of np.array): The array list to get the slices from.
+
+        Returns:
+            list of list of np.array: The list of list of image and mask slices.
+        """
         output_slices = []
         for array in array_list:
             current_image_slices = []
@@ -168,6 +177,7 @@ class ScreenShotMaker:
                 current_image_slices.append(array[:, self.max_id[1], :])
                 current_image_slices.append(array[:, :, self.max_id[2]])
             output_slices.append(current_image_slices)
+        return output_slices
 
     def get_image_to_write(self):
         image_slices = self.get_image_and_mask_slices(self.input_images_array)
