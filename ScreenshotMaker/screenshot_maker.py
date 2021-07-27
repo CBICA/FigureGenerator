@@ -141,7 +141,7 @@ class ScreenShotMaker:
                     current_nonzero = max_nonzero
                     max_id[1] = yid
 
-            if not(self.image_is_2d):
+            if not (self.image_is_2d):
                 max_nonzero = 0
                 for zid in range(self.input_mask_array[0].shape[2]):  # for each z-axis
                     current_slice = self.input_mask_array[0][:, :, zid]
@@ -163,15 +163,16 @@ class ScreenShotMaker:
         output_slices = []
         for array in array_list:
             current_image_slices = []
-            if not(self.image_is_2d):
+            if not (self.image_is_2d):
                 current_image_slices.append(array[self.max_id[0], :, :])
                 current_image_slices.append(array[:, self.max_id[1], :])
                 current_image_slices.append(array[:, :, self.max_id[2]])
             output_slices.append(current_image_slices)
-    
+
     def get_image_to_write(self):
-        image_slices, mask_slices = self.get_image_and_mask_slices(self.input_images_array), self.get_image_and_mask_slices(self.input_masks_array)
-        
+        image_slices = self.get_image_and_mask_slices(self.input_images_array)
+        mask_slices = self.get_image_and_mask_slices(self.input_masks_array)
+
         test = 1
 
     def save_screenshot(self, filename):
