@@ -24,7 +24,10 @@ class ScreenShotMaker:
             self.masks = None
 
         # initialize members
-        self.slice_numbers = args.slice
+        if args.slice is not None:
+            self.slice_numbers = args.slice.split(",")
+        else:
+            self.slice_numbers = None
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
         self.colormap = args.colormap
@@ -93,31 +96,32 @@ class ScreenShotMaker:
                 for image in input_masks
             ]
 
-            # loop over each axis and get index with largest area
-            max_nonzero = 0
-            max_id = [0, 0, 0]
-            for xid in range(input_mask_array[0].shape[0]):  # for each x-axis
-                current_slice = input_mask_array[0][xid, :, :]
-                current_nonzero = np.count_nonzero(current_slice)
-                if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
-                    max_id[0] = xid
+            if self.slice_numbers is None:
+                # loop over each axis and get index with largest area
+                max_nonzero = 0
+                max_id = [0, 0, 0]
+                for xid in range(input_mask_array[0].shape[0]):  # for each x-axis
+                    current_slice = input_mask_array[0][xid, :, :]
+                    current_nonzero = np.count_nonzero(current_slice)
+                    if current_nonzero > max_nonzero:
+                        current_nonzero = max_nonzero
+                        max_id[0] = xid
 
-            max_nonzero = 0
-            for yid in range(input_mask_array[0].shape[1]):  # for each x-axis
-                current_slice = input_mask_array[0][:, yid, :]
-                current_nonzero = np.count_nonzero(current_slice)
-                if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
-                    max_id[1] = yid
+                max_nonzero = 0
+                for yid in range(input_mask_array[0].shape[1]):  # for each x-axis
+                    current_slice = input_mask_array[0][:, yid, :]
+                    current_nonzero = np.count_nonzero(current_slice)
+                    if current_nonzero > max_nonzero:
+                        current_nonzero = max_nonzero
+                        max_id[1] = yid
 
-            max_nonzero = 0
-            for zid in range(input_mask_array[0].shape[2]):  # for each x-axis
-                current_slice = input_mask_array[0][:, :, zid]
-                current_nonzero = np.count_nonzero(current_slice)
-                if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
-                    max_id[2] = zid
+                max_nonzero = 0
+                for zid in range(input_mask_array[0].shape[2]):  # for each x-axis
+                    current_slice = input_mask_array[0][:, :, zid]
+                    current_nonzero = np.count_nonzero(current_slice)
+                    if current_nonzero > max_nonzero:
+                        current_nonzero = max_nonzero
+                        max_id[2] = zid
 
         else:
             input_mask_array = None
