@@ -69,6 +69,7 @@ class ScreenShotMaker:
         else:
             input_masks = None
 
+        ## 3d-specific calculations start here.
         if self.calculate_bounds:
             bounding_box = get_bounding_box(
                 input_images[0], input_masks, self.border_pc
