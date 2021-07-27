@@ -187,10 +187,7 @@ class ScreenShotMaker:
         if self.input_masks_array is not None:
             mask_slices = self.get_image_and_mask_slices(self.input_masks_array)
         else:
-            mask_slices = [
-                [None] * len(slice)
-                for slice in image_slices
-            ]
+            mask_slices = [[None] * len(slice) for slice in image_slices]
 
         images_blended = []
         # first put the image slices
@@ -199,9 +196,9 @@ class ScreenShotMaker:
             for i in range(len(image_slice)):
                 image = sitk.GetImageFromArray(image_slice[i])
                 image = sitk.Compose(image, image, image)
-                
+
                 current_images.append(alpha_blend(image, None))
-            
+
             images_blended.append(current_images)
 
         # next, put in the image slices blended with the masks
@@ -211,16 +208,15 @@ class ScreenShotMaker:
                 for i in range(len(image_slice)):
                     image = sitk.GetImageFromArray(image_slice[i])
                     image = sitk.Compose(image, image, image)
-                    
+
                     mask = None
                     if mask_slice[i] is not None:
                         mask = sitk.GetImageFromArray(mask_slice[i])
                         mask = sitk.Compose(mask, mask, mask)
-                    
+
                     current_images.append(alpha_blend(image, mask))
-                
+
                 images_blended.append(current_images)
-                
 
         test = 1
 
