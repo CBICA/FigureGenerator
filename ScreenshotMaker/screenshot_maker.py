@@ -1,11 +1,11 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-from SimpleITK.SimpleITK import GetArrayFromImage
 from .utils import (
     sanity_checker_base,
     resample_image,
     rescale_intensity,
     get_bounding_box,
+    alpha_blend,
 )
 import SimpleITK as sitk
 import numpy as np
@@ -191,6 +191,36 @@ class ScreenShotMaker:
                 [None] * len(slice)
                 for slice in image_slices
             ]
+
+        images_blended = []
+        # first put the image slices
+        for image_slice in image_slices:
+            current_images = []
+            for i in range(len(image_slice)):
+                image = sitk.GetImageFromArray(image_slice[i])
+                image = sitk.Compose(image, image, image)
+                
+                current_images.append(alpha_blend(image, None))
+            
+            images_blended.append(current_images)
+
+        # next, put in the image slices blended with the masks
+        if self.mask_present:
+            for (image_slice, mask_slice) in zip(image_slices, mask_slices):
+                current_images = []
+                for i in range(len(image_slice)):
+                    image = sitk.GetImageFromArray(image_slice[i])
+                    image = sitk.Compose(image, image, image)
+                    
+                    mask = None
+                    if mask_slice[i] is not None:
+                        mask = sitk.GetImageFromArray(mask_slice[i])
+                        mask = sitk.Compose(mask, mask, mask)
+                    
+                    current_images.append(alpha_blend(image, mask))
+                
+                images_blended.append(current_images)
+                
 
         test = 1
 
