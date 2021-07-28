@@ -63,9 +63,9 @@ class ScreenShotMaker:
         input_masks = None
         if self.mask_present:
             input_masks = [
-                resample_image(
+                rescale_intensity(resample_image(
                     sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
-                )
+                ))
                 for mask in self.masks
             ]
 
@@ -162,7 +162,10 @@ class ScreenShotMaker:
         output_slices = []
         for image in image_list:
             current_image_slices = []
-            if not (self.image_is_2d):
+            if self.image_is_2d:
+                current_image_slices.append(image[self.max_id[0], :])
+                current_image_slices.append(image[:, self.max_id[1]])
+            else:
                 current_image_slices.append(image[self.max_id[0], :, :])
                 current_image_slices.append(image[:, self.max_id[1], :])
                 current_image_slices.append(image[:, :, self.max_id[2]])
