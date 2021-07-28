@@ -164,28 +164,30 @@ def alpha_blend(image, mask=None, alpha=0.5, colormap="jet"):
         list: The bounding box in the form of [x_min, x_max, y_min, y_max, z_min, z_max]
     """
 
-    colomap_lut = {
-        "red": sitk.ScalarToRGBColormapImageFilter.Red,
-        "green": sitk.ScalarToRGBColormapImageFilter.Green,
-        "blue": sitk.ScalarToRGBColormapImageFilter.Blue,
-        "grey": sitk.ScalarToRGBColormapImageFilter.Grey,
-        "hot": sitk.ScalarToRGBColormapImageFilter.Hot,
-        "cool": sitk.ScalarToRGBColormapImageFilter.Cool,
-        "spring": sitk.ScalarToRGBColormapImageFilter.Spring,
-        "summer": sitk.ScalarToRGBColormapImageFilter.Summer,
-        "autumn": sitk.ScalarToRGBColormapImageFilter.Autumn,
-        "winter": sitk.ScalarToRGBColormapImageFilter.Winter,
-        "copper": sitk.ScalarToRGBColormapImageFilter.Copper,
-        "jet": sitk.ScalarToRGBColormapImageFilter.Jet,
-        "hsv": sitk.ScalarToRGBColormapImageFilter.HSV,
-        "overunder": sitk.ScalarToRGBColormapImageFilter.OverUnder,
-    }
+    # colormap_lut = {
+    #     "red": sitk.ScalarToRGBColormapImageFilter.Red,
+    #     "green": sitk.ScalarToRGBColormapImageFilter.Green,
+    #     "blue": sitk.ScalarToRGBColormapImageFilter.Blue,
+    #     "grey": sitk.ScalarToRGBColormapImageFilter.Grey,
+    #     "hot": sitk.ScalarToRGBColormapImageFilter.Hot,
+    #     "cool": sitk.ScalarToRGBColormapImageFilter.Cool,
+    #     "spring": sitk.ScalarToRGBColormapImageFilter.Spring,
+    #     "summer": sitk.ScalarToRGBColormapImageFilter.Summer,
+    #     "autumn": sitk.ScalarToRGBColormapImageFilter.Autumn,
+    #     "winter": sitk.ScalarToRGBColormapImageFilter.Winter,
+    #     "copper": sitk.ScalarToRGBColormapImageFilter.Copper,
+    #     "jet": sitk.ScalarToRGBColormapImageFilter.Jet,
+    #     "hsv": sitk.ScalarToRGBColormapImageFilter.HSV,
+    #     "overunder": sitk.ScalarToRGBColormapImageFilter.OverUnder,
+    # }
 
     if not mask:
         mask = sitk.Image(image.GetSize(), sitk.sitkFloat32) + 1.0
         mask.CopyInformation(image)
     else:
-        mask = sitk.ScalarToRGBColormap(alpha * mask, colomap_lut[colormap])
+        filter = sitk.LabelToRGBImageFilter()
+        # filter.SetColormap(colormap_lut[colormap])
+        mask = filter.Execute(mask)
         mask = sitk.Cast(mask, sitk.sitkVectorFloat32)
 
     components_per_pixel = mask.GetNumberOfComponentsPerPixel()
