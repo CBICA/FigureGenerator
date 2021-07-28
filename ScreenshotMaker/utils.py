@@ -186,7 +186,7 @@ def alpha_blend(image, mask=None, alpha=0.5, colormap="jet"):
         mask.CopyInformation(image)
     else:
         mask = sitk.ScalarToRGBColormap(alpha * mask, colomap_lut[colormap])
-        # mask = sitk.Cast(mask, sitk.sitkFloat32)
+        mask = sitk.Cast(mask, sitk.sitkVectorFloat32)
 
     components_per_pixel = mask.GetNumberOfComponentsPerPixel()
     img = sitk.Cast(image, sitk.sitkFloat32)
