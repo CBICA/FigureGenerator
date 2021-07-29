@@ -1,5 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from .utils import (
     sanity_checker_base,
     resample_image,
@@ -35,6 +36,7 @@ class ScreenShotMaker:
         self.axis_row = args.axis_row
         self.calculate_bounds = args.bounded
         self.tiler = sitk.TileImageFilter()
+        self.output_dir = args.output
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -63,9 +65,11 @@ class ScreenShotMaker:
         input_masks = None
         if self.mask_present:
             input_masks = [
-                rescale_intensity(resample_image(
-                    sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
-                ))
+                (
+                    resample_image(
+                        sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
+                    )
+                )
                 for mask in self.masks
             ]
 
@@ -78,20 +82,34 @@ class ScreenShotMaker:
             bounding_box = get_bounding_box(input_images[0], None, None)
 
         extract = sitk.ExtractImageFilter()
-        extract.SetSize([bounding_box[1] - bounding_box[0] + 1, bounding_box[3] - bounding_box[2] + 1, bounding_box[5] - bounding_box[4] + 1])
+        extract.SetSize(
+            [
+                bounding_box[1] - bounding_box[0] + 1,
+                bounding_box[3] - bounding_box[2] + 1,
+                bounding_box[5] - bounding_box[4] + 1,
+            ]
+        )
         extract.SetIndex([bounding_box[0], bounding_box[2], bounding_box[4]])
 
         # get the bounded image and masks in the form of arrays
         if len(input_images[0].GetSize()) == 3:
             self.input_images_bounded = [
-                image[bounding_box[0]:bounding_box[1] + 1, bounding_box[2]:bounding_box[3] + 1, bounding_box[4]:bounding_box[5] + 1]
+                image[
+                    bounding_box[0] : bounding_box[1] + 1,
+                    bounding_box[2] : bounding_box[3] + 1,
+                    bounding_box[4] : bounding_box[5] + 1,
+                ]
                 for image in input_images
             ]
             self.image_is_2d = False
         elif len(input_images[0].GetSize()) == 2:
             # raise NotImplementedError("2D not yet supported")
             self.input_images_bounded = [
-                image[bounding_box[0]:bounding_box[1] + 1, bounding_box[2]:bounding_box[3] + 1, :]
+                image[
+                    bounding_box[0] : bounding_box[1] + 1,
+                    bounding_box[2] : bounding_box[3] + 1,
+                    :,
+                ]
                 for image in input_images
             ]
             self.image_is_2d = True
@@ -99,12 +117,20 @@ class ScreenShotMaker:
         if self.mask_present:
             if len(input_images[0].GetSize()) == 3:
                 self.input_masks_bounded = [
-                    image[bounding_box[0]:bounding_box[1] + 1, bounding_box[2]:bounding_box[3] + 1, bounding_box[4]:bounding_box[5] + 1]
+                    image[
+                        bounding_box[0] : bounding_box[1] + 1,
+                        bounding_box[2] : bounding_box[3] + 1,
+                        bounding_box[4] : bounding_box[5] + 1,
+                    ]
                     for image in input_masks
                 ]
             elif len(input_images[0].GetSize()) == 2:
                 self.input_masks_bounded = [
-                    image[bounding_box[0]:bounding_box[1] + 1, bounding_box[2]:bounding_box[3] + 1, :]
+                    image[
+                        bounding_box[0] : bounding_box[1] + 1,
+                        bounding_box[2] : bounding_box[3] + 1,
+                        :,
+                    ]
                     for image in input_masks
                 ]
 
@@ -114,7 +140,9 @@ class ScreenShotMaker:
             size = self.input_masks_bounded[0].GetSize()
             for xid in range(size[0]):  # for each x-axis
                 current_slice = self.input_masks_bounded[0][xid, :, :]
-                current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
+                current_nonzero = np.count_nonzero(
+                    sitk.GetArrayFromImage(current_slice)
+                )
                 if current_nonzero > max_nonzero:
                     max_nonzero = current_nonzero
                     max_id[0] = xid
@@ -122,7 +150,9 @@ class ScreenShotMaker:
             max_nonzero = 0
             for yid in range(size[1]):  # for each y-axis
                 current_slice = self.input_masks_bounded[0][:, yid, :]
-                current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
+                current_nonzero = np.count_nonzero(
+                    sitk.GetArrayFromImage(current_slice)
+                )
                 if current_nonzero > max_nonzero:
                     max_nonzero = current_nonzero
                     max_id[1] = yid
@@ -131,7 +161,9 @@ class ScreenShotMaker:
                 max_nonzero = 0
                 for zid in range(size[2]):  # for each z-axis
                     current_slice = self.input_masks_bounded[0][:, :, zid]
-                    current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
+                    current_nonzero = np.count_nonzero(
+                        sitk.GetArrayFromImage(current_slice)
+                    )
                     if current_nonzero > max_nonzero:
                         max_nonzero = current_nonzero
                         max_id[2] = zid
@@ -187,7 +219,7 @@ class ScreenShotMaker:
                 # image = sitk.GetImageFromArray(image_slice[i])
                 # image = sitk.Compose(image, image, image)
 
-                current_images.append(alpha_blend(image_slice[i], None))
+                current_images.append(alpha_blend(image_slice[i]))
 
             images_blended.append(current_images)
 
@@ -209,6 +241,10 @@ class ScreenShotMaker:
 
                 images_blended.append(current_images)
 
+        sitk.WriteImage(
+            sitk.Cast(images_blended[0][0], sitk.sitkVectorUInt8),
+            os.path.join(self.output_dir, "images_blended00.png")
+        )
         test = 1
 
     def save_screenshot(self, filename):
