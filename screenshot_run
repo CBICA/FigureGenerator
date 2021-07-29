@@ -40,13 +40,13 @@ if __name__ == "__main__":
         help="Mask opacity betwee 0-1",
         required=False,
     )
-    parser.add_argument(
-        "-colormap",
-        type=str,
-        default="jet",
-        help="The color map to use for alpha blending. All options in https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScalarToRGBColormapImageFilter.html#ad6f89e6e076652b4debdfbfd82234c6f",
-        required=False,
-    )
+    # parser.add_argument(
+    #     "-colormap",
+    #     type=str,
+    #     default="jet",
+    #     help="The color map to use for alpha blending. All options in https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ScalarToRGBColormapImageFilter.html#ad6f89e6e076652b4debdfbfd82234c6f",
+    #     required=False,
+    # )
     parser.add_argument(
         "-output",
         type=str,
