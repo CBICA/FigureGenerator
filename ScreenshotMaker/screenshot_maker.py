@@ -263,6 +263,21 @@ class ScreenShotMaker:
 
         self.fig, _ = plt.subplots(self.layout[1], self.layout[0], figsize=(self.layout[0]*5/2, self.layout[1]*5/2))
         plt.subplots_adjust(wspace=0, hspace=0)
+        plt.rcParams.update({
+            "lines.color": "white",
+            "patch.edgecolor": "white",
+            "text.color": "black",
+            "axes.facecolor": "white",
+            "axes.edgecolor": "lightgray",
+            "axes.labelcolor": "white",
+            "xtick.color": "white",
+            "ytick.color": "white",
+            "grid.color": "lightgray",
+            "figure.facecolor": "black",
+            "figure.edgecolor": "black",
+            "savefig.facecolor": "black",
+            "savefig.edgecolor": "black"}
+            )
         for ax, img in zip(self.fig.axes, images_blended):
             ax.imshow(sitk.GetArrayFromImage(img))
             ax.axis("off")
