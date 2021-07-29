@@ -290,7 +290,11 @@ class ScreenShotMaker:
                 ax.title.set_text("Sagittal")
             elif counter % 3 == 0:
                 ax.title.set_text("Coronal")
-            ax.title.set_color('white')
+            
+            if counter <= self.layout[0]:
+                ax.title.set_color('white')
+            else:
+                ax.title.set_color('black')
         plt.tight_layout()
         plt.savefig(os.path.join(self.output))
         # tiler_images = sitk.TileImageFilter()
