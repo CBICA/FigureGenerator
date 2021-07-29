@@ -61,13 +61,14 @@ if __name__ == "__main__":
     #     help="Slice number to pick screenshots from; if not defined and mask present, slices with largest areas are used; if masks are absent, middle of each axis from image(s) is used",
     #     required=False,
     # )
-    parser.add_argument(
-        "-axis_row",
-        type=bool,
-        default=True,
-        help="Put all axes views in a single row, defaults to True",
-        required=False,
-    )
+    ## this is problematic because the images in images_blended will need to be re-ordered
+    # parser.add_argument(
+    #     "-axis_row",
+    #     type=bool,
+    #     default=True,
+    #     help="Put all axes views in a single row, defaults to True",
+    #     required=False,
+    # )
     parser.add_argument(
         "-bounded",
         type=bool,
@@ -94,6 +95,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     sm = ScreenShotMaker(args)
-    sm.make_screenshot()
 
     print("Finished.")
