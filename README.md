@@ -46,18 +46,3 @@ python ./screenshot_run -images C:/input/subject_001_flair.nii.gz,C:/input/subje
 ```
 Gives the following output:
 ![axisrow_true](images/axisrow_true.png)
-## Outputs
-
-### For single image
-
-A single PNG:
-- All axes views along the x-axis
-- Show only the image in the first row
-- Second row image and mask overlaid based on opacity
-- Repeat one row per mask file 
-
-### For multiple images
-
-Two images:
-1. Stack previous in in multiple rows (2-column manuscript)
-2. Stack previous in in multiple columns (1-column manuscript)
