@@ -98,7 +98,7 @@ def resample_image(
             raise Exception("len(size) != " + str(img.GetDimension()))
 
     # Resample input image
-    return sitk.Resample(
+    resampled_image = sitk.Resample(
         img,
         size,
         sitk.Transform(),
@@ -108,6 +108,10 @@ def resample_image(
         img.GetDirection(),
         outsideValue,
     )
+
+    orienter = sitk.DICOMOrientImageFilter()
+    orienter.SetDesiredCoordinateOrientation("RAI")
+    return orienter.Execute(resampled_image)
 
 
 def get_bounding_box(image, mask_list, border_pc):
