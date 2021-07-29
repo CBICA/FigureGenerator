@@ -66,8 +66,10 @@ class ScreenShotMaker:
         if self.mask_present:
             input_masks = [
                 (
-                    resample_image(
-                        sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
+                    (
+                        resample_image(
+                            sitk.ReadImage(mask), interpolator=sitk.sitkNearestNeighbor
+                        )
                     )
                 )
                 for mask in self.masks
@@ -243,7 +245,7 @@ class ScreenShotMaker:
 
         sitk.WriteImage(
             sitk.Cast(images_blended[0][0], sitk.sitkVectorUInt8),
-            os.path.join(self.output_dir, "images_blended00.png")
+            os.path.join(self.output_dir, "images_blended00.png"),
         )
         test = 1
 
