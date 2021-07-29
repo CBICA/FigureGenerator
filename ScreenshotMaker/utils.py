@@ -191,7 +191,17 @@ def alpha_blend(image, mask=None, alpha=0.5):
         mask = sitk.Image(image.GetSize(), sitk.sitkUInt8)
         mask.CopyInformation(image)
 
+    ## the r was not getting visualized, so commented out
+    # r = [255,0,0]
+    # g = [0,255,0]
+    # b = [0,0,255]
+    # return sitk.LabelOverlay(image=sitk.Cast(image, sitk.sitkUInt8),
+    #                                  labelImage=mask,
+    #                                  opacity=alpha, backgroundValue = 0,
+    #                                  colormap=r+g+b)
+
     filter = sitk.LabelOverlayImageFilter()
     filter.SetOpacity(alpha)
-    # filter.SetColormap()
+    # filter.SetBackgroundValue(0)
+    # filter.SetColormap(r+g+b)
     return filter.Execute(sitk.Cast(image, sitk.sitkUInt8), mask)
