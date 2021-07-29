@@ -245,7 +245,7 @@ class ScreenShotMaker:
                         blended_image = alpha_blend(image_slice[i], mask)
                         images_with_mask.append(blended_image)
                         images_blended.append(blended_image)
-        
+
         # start the plotting
         self.fig, _ = plt.subplots(
             self.layout[1],
@@ -272,7 +272,7 @@ class ScreenShotMaker:
                 "savefig.edgecolor": "black",
             }
         )
-        
+
         # we only want the titles for first row
         counter = 0
         for ax, img in zip(self.fig.axes, images_blended):
