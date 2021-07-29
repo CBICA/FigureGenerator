@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, division
-import argparse, datetime, sys
+import argparse, datetime, sys, ast
 import ScreenshotMaker as sm
 from ScreenshotMaker.screenshot_maker import ScreenShotMaker
 
@@ -62,16 +62,15 @@ if __name__ == "__main__":
     #     required=False,
     # )
     parser.add_argument(
-        "-ar",
-        "--axis_row",
-        type=bool,
+        "-axisrow",
+        type=ast.literal_eval,
         default=False,
         help="Put all axes views across each column and stack images and blends in rows, defaults to False",
         required=False,
     )
     parser.add_argument(
         "-bounded",
-        type=bool,
+        type=ast.literal_eval,
         default=False,
         help="Construct bounding box around binarized ground truth",
         required=False,
@@ -93,7 +92,7 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    
+
     sm = ScreenShotMaker(args)
 
     print("Finished.")
