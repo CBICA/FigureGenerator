@@ -10,6 +10,7 @@ from .utils import (
 )
 import SimpleITK as sitk
 import numpy as np
+from .multi_image_display import MultiImageDisplay
 
 class ScreenShotMaker:
     def __init__(self, args):
@@ -220,11 +221,14 @@ class ScreenShotMaker:
             mask_slices = [[None] * len(slice) for slice in image_slices]
 
         images_blended = []
+        only_images, images_with_mask = [], []
         # first put the image slices
         for image_slice in image_slices:
             for i in range(len(image_slice)):
+                blended_image = alpha_blend(image_slice[i])
 
-                images_blended.append(alpha_blend(image_slice[i]))
+                images_blended.append(blended_image)
+                only_images.append(blended_image)
 
         # next, put in the image slices blended with the masks
         if self.mask_present:
@@ -235,9 +239,15 @@ class ScreenShotMaker:
                     if mask_slice[i] is not None:
                         mask = mask_slice[i]
 
-                    images_blended.append(alpha_blend(image_slice[i], mask))
+                    blended_image = alpha_blend(image_slice[i], mask)
+                    images_blended.append(blended_image)
+                    images_with_mask.append(blended_image)
 
-        sitk.WriteImage(
-            self.tiler.Execute(images_blended),
-            self.output,
-        )
+        # sitk.WriteImage(
+        #     self.tiler.Execute(images_blended),
+        #     self.output,
+        # )
+        MultiImageDisplay(image_list = [sitk.JoinSeries(only_images), sitk.JoinSeries(images_with_mask)],
+                      title_list = ['Images', 'with mask'],
+                      output_file=self.output,
+                      )
