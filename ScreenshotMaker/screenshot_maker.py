@@ -33,7 +33,7 @@ class ScreenShotMaker:
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
         self.colormap = args.colormap.lower()
-        self.axis_row = True # args.axis_row
+        self.axis_row = True  # args.axis_row
         self.calculate_bounds = args.bounded
         self.output = args.output
         _, ext = os.path.splitext(self.output)
@@ -41,12 +41,12 @@ class ScreenShotMaker:
             pathlib.Path(self.output).mkdir(parents=True, exist_ok=True)
             self.output = os.path.join(self.output, "screenshot.png")
         self.tiler = sitk.TileImageFilter()
-        
+
         if self.axis_row:
             layout = (3, len(self.images) + len(self.masks) * len(self.images), 0)
         else:
             layout = (len(self.images) + len(self.masks) * len(self.images), 3, 0)
-        
+
         self.tiler.SetLayout(layout)
 
         ## sanity checker
@@ -63,10 +63,6 @@ class ScreenShotMaker:
 
     def read_images_and_store_arrays(self):
         # make the screenshot
-        # try one of the following:
-        # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelMapOverlayImageFilter.html
-        # - https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1LabelOverlayImageFilter.html -- seems to be more appropriate
-        # - https://github.com/SimpleITK/NIH2019_COURSE/blob/master/09_results_visualization.ipynb
 
         input_images = [
             rescale_intensity(resample_image(sitk.ReadImage(image)))
@@ -246,4 +242,3 @@ class ScreenShotMaker:
             self.tiler.Execute(images_blended),
             self.output,
         )
-
