@@ -35,9 +35,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-mask_opacity",
-        type=int,
-        default=100,
-        help="Mask opacity",
+        type=float,
+        default=0.5,
+        help="Mask opacity betwee 0-1",
         required=False,
     )
     parser.add_argument(
