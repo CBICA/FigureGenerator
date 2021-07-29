@@ -21,7 +21,7 @@ except Exception as error:
 
 requirements = [
     "numpy==1.19.2",
-    "SimpleITK==1.2.4",
+    "SimpleITK==2.1.0",
     "pytest",
     "coverage",
     "psutil",
