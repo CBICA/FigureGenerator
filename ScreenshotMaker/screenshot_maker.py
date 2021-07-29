@@ -33,7 +33,7 @@ class ScreenShotMaker:
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
         self.colormap = args.colormap.lower()
-        self.axis_row = args.axis_row
+        self.axis_row = True # args.axis_row
         self.calculate_bounds = args.bounded
         self.output = args.output
         _, ext = os.path.splitext(self.output)
@@ -227,7 +227,6 @@ class ScreenShotMaker:
         images_blended = []
         # first put the image slices
         for image_slice in image_slices:
-            current_images = []
             for i in range(len(image_slice)):
 
                 images_blended.append(alpha_blend(image_slice[i]))
@@ -235,7 +234,6 @@ class ScreenShotMaker:
         # next, put in the image slices blended with the masks
         if self.mask_present:
             for (image_slice, mask_slice) in zip(image_slices, mask_slices):
-                current_images = []
                 for i in range(len(image_slice)):
 
                     mask = None
