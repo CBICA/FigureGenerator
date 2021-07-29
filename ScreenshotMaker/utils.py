@@ -120,7 +120,17 @@ def resample_image(
         oriented_image.SetOrigin((0, 0))
         oriented_image.SetDirection((1, 0, 0, 1))
 
-    return oriented_image
+    size = oriented_image.GetSize()
+    max_size = max(size)
+
+    padding = [0]*oriented_image.GetDimension()
+
+    for i in range(oriented_image.GetDimension()):
+        padding[i] = int(math.floor(max_size - size[i])/2.0)
+    
+    padded_image = sitk.ConstantPad( oriented_image, padding, padding, 0.0 )
+
+    return padded_image
 
 
 def get_bounding_box(image, mask_list, border_pc):
