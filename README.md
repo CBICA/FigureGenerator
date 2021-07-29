@@ -51,14 +51,22 @@ optional arguments:
 
 1. Vertical screenshot of multiple images:
 ```powershell
-python ./screenshot_run -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz -masks C:/input/subject_001_seg.nii.gz -output C:/input/fig.png -axisrow False
+python ./screenshot_run \
+-images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
+-masks C:/input/subject_001_seg.nii.gz \
+-axisrow False \
+-output C:/input/fig.png 
 ```
 Gives the following output:
 ![axisrow_false](images/axisrow_false.png)
 
 2. Horizontal screenshot of multiple images:
 ```powershell
-python ./screenshot_run -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz -masks C:/input/subject_001_seg.nii.gz -output C:/input/fig.png -axisrow True
+python ./screenshot_run \
+-images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
+-masks C:/input/subject_001_seg.nii.gz \
+-axisrow True \
+-output C:/input/fig.png 
 ```
 Gives the following output:
 ![axisrow_true](images/axisrow_true.png)
