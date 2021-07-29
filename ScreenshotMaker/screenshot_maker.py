@@ -118,7 +118,6 @@ class ScreenShotMaker:
                 if current_nonzero > max_nonzero:
                     max_nonzero = current_nonzero
                     max_id[0] = xid
-                    sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_x.png")
 
             max_nonzero = 0
             for yid in range(size[1]):  # for each y-axis
@@ -127,7 +126,6 @@ class ScreenShotMaker:
                 if current_nonzero > max_nonzero:
                     max_nonzero = current_nonzero
                     max_id[1] = yid
-                    sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_y.png")
 
             if not (self.image_is_2d):
                 max_nonzero = 0
@@ -137,7 +135,6 @@ class ScreenShotMaker:
                     if current_nonzero > max_nonzero:
                         max_nonzero = current_nonzero
                         max_id[2] = zid
-                        sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_z.png")
 
         else:
             self.input_masks_bounded = None
