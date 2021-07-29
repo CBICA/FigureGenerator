@@ -26,7 +26,7 @@ class MultiImageDisplay(object):
     def __init__(
         self,
         image_list,
-        output_dir,
+        output_file,
         axis=0,
         title_list=None,
         figure_size=(10, 8),
@@ -65,4 +65,4 @@ class MultiImageDisplay(object):
                 vmax=wl_slider.value[1],
             )
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, "output.png"))
+        plt.savefig(os.path.join(output_file))
