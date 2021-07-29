@@ -2,6 +2,15 @@
 
 This project helps create screenshots for medical images for use in presentations and/or manuscripts.
 
+## Installation
+
+```powershell
+git clone https://github.com/sarthakpati/screenshot_maker.git
+cd screenshot_maker
+conda create -n venv_screenshot python=3.7 -y
+conda activate venv_screenshot
+pip install -e .
+```
 ## Usage
 
 ```powershell
