@@ -111,7 +111,16 @@ def resample_image(
 
     orienter = sitk.DICOMOrientImageFilter()
     orienter.SetDesiredCoordinateOrientation("RAI")
-    return orienter.Execute(resampled_image)
+    oriented_image = orienter.Execute(resampled_image)
+
+    if oriented_image.GetDimension() == 3:
+        oriented_image.SetOrigin((0, 0, 0))
+        oriented_image.SetDirection((1, 0, 0, 0, 1, 0, 0, 0, 1))
+    elif oriented_image.GetDimension() == 2:
+        oriented_image.SetOrigin((0, 0))
+        oriented_image.SetDirection((1, 0, 0, 1))
+
+    return oriented_image
 
 
 def get_bounding_box(image, mask_list, border_pc):
