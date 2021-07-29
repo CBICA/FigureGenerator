@@ -1,6 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
+import os, pathlib
 from .utils import (
     sanity_checker_base,
     resample_image,
@@ -35,8 +35,19 @@ class ScreenShotMaker:
         self.colormap = args.colormap.lower()
         self.axis_row = args.axis_row
         self.calculate_bounds = args.bounded
+        self.output = args.output
+        _, ext = os.path.splitext(self.output)
+        if ext == "" or ext is None:
+            pathlib.Path(self.output).mkdir(parents=True, exist_ok=True)
+            self.output = os.path.join(self.output, "screenshot.png")
         self.tiler = sitk.TileImageFilter()
-        self.output_dir = args.output
+        
+        if self.axis_row:
+            layout = (3, len(self.images) + len(self.masks) * len(self.images), 0)
+        else:
+            layout = (len(self.images) + len(self.masks) * len(self.images), 3, 0)
+        
+        self.tiler.SetLayout(layout)
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -218,37 +229,23 @@ class ScreenShotMaker:
         for image_slice in image_slices:
             current_images = []
             for i in range(len(image_slice)):
-                # image = sitk.GetImageFromArray(image_slice[i])
-                # image = sitk.Compose(image, image, image)
 
-                current_images.append(alpha_blend(image_slice[i]))
-
-            images_blended.append(current_images)
+                images_blended.append(alpha_blend(image_slice[i]))
 
         # next, put in the image slices blended with the masks
         if self.mask_present:
             for (image_slice, mask_slice) in zip(image_slices, mask_slices):
                 current_images = []
                 for i in range(len(image_slice)):
-                    # image = sitk.GetImageFromArray(image_slice[i])
-                    # image = sitk.Compose(image, image, image)
 
                     mask = None
                     if mask_slice[i] is not None:
                         mask = mask_slice[i]
-                        # mask = rescale_intensity(sitk.GetImageFromArray(mask_slice[i]))
-                        # mask = sitk.Compose(mask, mask, mask)
 
-                    current_images.append(alpha_blend(image_slice[i], mask))
-
-                images_blended.append(current_images)
+                    images_blended.append(alpha_blend(image_slice[i], mask))
 
         sitk.WriteImage(
-            sitk.Cast(images_blended[0][0], sitk.sitkVectorUInt8),
-            os.path.join(self.output_dir, "images_blended00.png"),
+            self.tiler.Execute(images_blended),
+            self.output,
         )
-        test = 1
 
-    def save_screenshot(self, filename):
-        # save the screenshot to a file
-        test = 1
