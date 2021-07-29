@@ -11,6 +11,13 @@ conda create -n venv_screenshot python=3.7 -y
 conda activate venv_screenshot
 pip install -e .
 ```
+
+OR directly via Pip:
+
+```powershell
+pip install ScreenshotMaker
+```
+
 ## Usage
 
 ```powershell
