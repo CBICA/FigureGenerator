@@ -64,7 +64,6 @@ class ScreenShotMaker:
         self.read_images_and_store_arrays()
 
     def read_images_and_store_arrays(self):
-        # make the screenshot
 
         input_images = [
             rescale_intensity(resample_image(sitk.ReadImage(image)))
@@ -261,7 +260,7 @@ class ScreenShotMaker:
         #     self.output,
         # )
 
-        self.fig, _ = plt.subplots(self.layout[1], self.layout[0], figsize=(self.layout[0]*5/2, self.layout[1]*5/2), constrained_layout=True)
+        self.fig, _ = plt.subplots(self.layout[1], self.layout[0], figsize=(self.layout[0]*5/2, self.layout[1]*5/2))
         self.fig.set_dpi(600)
         plt.subplots_adjust(wspace=0, hspace=0)
         plt.rcParams.update({
@@ -285,17 +284,15 @@ class ScreenShotMaker:
             ax.imshow(sitk.GetArrayFromImage(img))
             ax.axis("off")
             counter += 1
-            if counter % 3 == 1:
-                ax.set_title("Axial", verticalalignment="top")
-            elif counter % 3 == 2:
-                ax.set_title("Sagittal", verticalalignment="top")
-            elif counter % 3 == 0:
-                ax.set_title("Coronal", verticalalignment="top")
-            
             if counter <= self.layout[0]:
+                if counter % 3 == 1:
+                    ax.set_title("Sagittal")
+                elif counter % 3 == 2:
+                    ax.set_title("Coronal")
+                elif counter % 3 == 0:
+                    ax.set_title("Axial")
                 ax.title.set_color('white')
-            else:
-                ax.title.set_color('black')
+            
         plt.tight_layout()
         plt.savefig(os.path.join(self.output))
         # tiler_images = sitk.TileImageFilter()
