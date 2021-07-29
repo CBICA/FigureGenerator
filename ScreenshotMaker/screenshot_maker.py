@@ -35,7 +35,7 @@ class ScreenShotMaker:
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
         self.colormap = args.colormap.lower()
-        self.axis_row = True  # args.axis_row
+        self.axis_row = args.axis_row
         self.calculate_bounds = args.bounded
         self.output = args.output
         _, ext = os.path.splitext(self.output)
