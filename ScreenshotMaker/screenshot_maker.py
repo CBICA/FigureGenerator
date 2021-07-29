@@ -76,7 +76,6 @@ class ScreenShotMaker:
             )
         else:
             bounding_box = get_bounding_box(input_images[0], None, None)
-        print(bounding_box)
 
         extract = sitk.ExtractImageFilter()
         extract.SetSize([bounding_box[1] - bounding_box[0] + 1, bounding_box[3] - bounding_box[2] + 1, bounding_box[5] - bounding_box[4] + 1])
@@ -117,16 +116,18 @@ class ScreenShotMaker:
                 current_slice = self.input_masks_bounded[0][xid, :, :]
                 current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
                 if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
+                    max_nonzero = current_nonzero
                     max_id[0] = xid
+                    sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_x.png")
 
             max_nonzero = 0
             for yid in range(size[1]):  # for each y-axis
                 current_slice = self.input_masks_bounded[0][:, yid, :]
                 current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
                 if current_nonzero > max_nonzero:
-                    current_nonzero = max_nonzero
+                    max_nonzero = current_nonzero
                     max_id[1] = yid
+                    sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_y.png")
 
             if not (self.image_is_2d):
                 max_nonzero = 0
@@ -134,8 +135,9 @@ class ScreenShotMaker:
                     current_slice = self.input_masks_bounded[0][:, :, zid]
                     current_nonzero = np.count_nonzero(sitk.GetArrayFromImage(current_slice))
                     if current_nonzero > max_nonzero:
-                        current_nonzero = max_nonzero
+                        max_nonzero = current_nonzero
                         max_id[2] = zid
+                        sitk.WriteImage(current_slice,"C:/Users/sarth/Downloads/mask_z.png")
 
         else:
             self.input_masks_bounded = None
