@@ -50,7 +50,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-output",
         type=str,
-        help="Output directory to save intermediate files and model weights",
+        help="Output screenshot file",
         required=True,
     )
     ## this is problematic because these numbers will need to be translated after resampling the image
