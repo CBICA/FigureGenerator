@@ -35,7 +35,6 @@ class ScreenShotMaker:
         #     self.slice_numbers = None
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
-        self.colormap = args.colormap.lower()
         self.axisrow = args.axisrow
         self.calculate_bounds = args.bounded
         self.output = args.output
