@@ -37,7 +37,7 @@ if __name__ == "__main__":
         "-mask_opacity",
         type=float,
         default=0.5,
-        help="Mask opacity betwee 0-1",
+        help="Mask opacity between 0-1",
         required=False,
     )
     # parser.add_argument(
