@@ -12,6 +12,7 @@ import SimpleITK as sitk
 import numpy as np
 from .multi_image_display import MultiImageDisplay
 
+
 class ScreenShotMaker:
     def __init__(self, args):
         # change comma-separated string to list for images and masks
@@ -247,7 +248,11 @@ class ScreenShotMaker:
         #     self.tiler.Execute(images_blended),
         #     self.output,
         # )
-        MultiImageDisplay(image_list = [sitk.JoinSeries(only_images), sitk.JoinSeries(images_with_mask)],
-                      title_list = ['Images', 'with mask'],
-                      output_file=self.output,
-                      )
+        MultiImageDisplay(
+            image_list=[
+                sitk.JoinSeries(only_images),
+                sitk.JoinSeries(images_with_mask),
+            ],
+            title_list=["Images", "with mask"],
+            output_file=self.output,
+        )
