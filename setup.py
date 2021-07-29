@@ -27,6 +27,7 @@ requirements = [
     "psutil",
     "medcam",
     "black",
+    "ipywidgets",
 ]
 
 setup(
