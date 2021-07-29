@@ -11,7 +11,6 @@ from .utils import (
 import SimpleITK as sitk
 import numpy as np
 
-
 class ScreenShotMaker:
     def __init__(self, args):
         # change comma-separated string to list for images and masks
@@ -43,7 +42,7 @@ class ScreenShotMaker:
         self.tiler = sitk.TileImageFilter()
 
         if self.axis_row:
-            layout = (3, len(self.images) + len(self.masks) * len(self.images), 0)
+            layout = (3 * len(self.images), 1 + len(self.masks) * len(self.images), 0)
         else:
             layout = (len(self.images) + len(self.masks) * len(self.images), 3, 0)
 
