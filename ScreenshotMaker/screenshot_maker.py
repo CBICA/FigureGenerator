@@ -10,7 +10,8 @@ from .utils import (
 )
 import SimpleITK as sitk
 import numpy as np
-from .multi_image_display import MultiImageDisplay
+# from .multi_image_display import MultiImageDisplay
+import matplotlib.pyplot as plt
 
 
 class ScreenShotMaker:
@@ -44,11 +45,11 @@ class ScreenShotMaker:
         self.tiler = sitk.TileImageFilter()
 
         if self.axis_row:
-            layout = (3 * len(self.images), 1 + len(self.masks) * len(self.images), 0)
+            self.layout = (3 * len(self.images), 1 + len(self.masks), 0)
         else:
-            layout = (len(self.images) + len(self.masks) * len(self.images), 3, 0)
+            self.layout = (3, len(self.images) + len(self.masks), 0)
 
-        self.tiler.SetLayout(layout)
+        self.tiler.SetLayout(self.layout)
 
         ## sanity checker
         # read the first image and save that for comparison
@@ -233,26 +234,54 @@ class ScreenShotMaker:
 
         # next, put in the image slices blended with the masks
         if self.mask_present:
-            for (image_slice, mask_slice) in zip(image_slices, mask_slices):
-                for i in range(len(image_slice)):
+            for image_slice in image_slices:
+                for mask_slice in mask_slices:
+                    for i in range(len(image_slice)):
 
-                    mask = None
-                    if mask_slice[i] is not None:
-                        mask = mask_slice[i]
+                        mask = None
+                        if mask_slice[i] is not None:
+                            mask = mask_slice[i]
 
-                    blended_image = alpha_blend(image_slice[i], mask)
-                    images_blended.append(blended_image)
-                    images_with_mask.append(blended_image)
+                        blended_image = alpha_blend(image_slice[i], mask)
+                        images_with_mask.append(blended_image)
+                        images_blended.append(blended_image)
+            # for (image_slice, mask_slice) in zip(image_slices, mask_slices):
+            #     for i in range(len(image_slice)):
+
+            #         mask = None
+            #         if mask_slice[i] is not None:
+            #             mask = mask_slice[i]
+
+            #         blended_image = alpha_blend(image_slice[i], mask)
+            #         images_with_mask.append(blended_image)
+            #         images_blended.append(blended_image)
 
         # sitk.WriteImage(
         #     self.tiler.Execute(images_blended),
         #     self.output,
         # )
-        MultiImageDisplay(
-            image_list=[
-                sitk.JoinSeries(only_images),
-                sitk.JoinSeries(images_with_mask),
-            ],
-            title_list=["Images", "with mask"],
-            output_file=self.output,
-        )
+
+        self.fig, _ = plt.subplots(self.layout[1], self.layout[0], figsize=(self.layout[0]*5/2, self.layout[1]*5/2))
+        plt.subplots_adjust(wspace=0, hspace=0)
+        for ax, img in zip(self.fig.axes, images_blended):
+            ax.imshow(sitk.GetArrayFromImage(img))
+            ax.axis("off")
+        plt.tight_layout()
+        plt.savefig(os.path.join(self.output))
+        # tiler_images = sitk.TileImageFilter()
+        # tiler_images_and_masks = sitk.TileImageFilter()
+
+        # tiler_images.SetLayout((3 * len(self.images), 1, 0))
+        # tiler_images_and_masks.SetLayout((3 * len(self.images), len(self.masks) * len(self.images), 0))
+
+        # images = tiler_images.Execute(only_images)
+        # images_and_masks = tiler_images_and_masks.Execute(images_with_mask)
+
+        # MultiImageDisplay(
+        #     image_list=[
+        #         images,
+        #         images_and_masks,
+        #     ],
+        #     title_list=["Images", "with mask"],
+        #     output_file=self.output,
+        # )
