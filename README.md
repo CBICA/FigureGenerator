@@ -31,17 +31,21 @@ optional arguments:
   -v, --version         Show program's version number and exit.
 ```
 
-- Image (single or multiple co-registered)
-  - for multiple images:
-    - perform sanity check 
-- Mask: Optional
-  - for multiple masks (in case of showing ground truth and computationally-generated masks), assume first is ground truth
-  - perform sanity check 
-- Mask opacity: Optional (default is 100 - full opacity)
-- Slice number: Optional
-  - if not defined and mask is present, binarize the mask (first file if multiple masks are passed) and use the slices with largest area
-  - if not defined and mask is absent, use middle of each axis from image(s)
+### Examples
 
+1. Vertical screenshot of multiple images:
+```powershell
+python ./screenshot_run -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz -masks C:/input/subject_001_seg.nii.gz -output C:/input/fig.png -axisrow False
+```
+Gives the following output:
+![axisrow_false](images/axisrow_false.png)
+
+2. Horizontal screenshot of multiple images:
+```powershell
+python ./screenshot_run -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz -masks C:/input/subject_001_seg.nii.gz -output C:/input/fig.png -axisrow True
+```
+Gives the following output:
+![axisrow_true](images/axisrow_true.png)
 ## Outputs
 
 ### For single image
