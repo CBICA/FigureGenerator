@@ -10,6 +10,7 @@ from .utils import (
 )
 import SimpleITK as sitk
 import numpy as np
+
 # from .multi_image_display import MultiImageDisplay
 import matplotlib.pyplot as plt
 
@@ -260,25 +261,31 @@ class ScreenShotMaker:
         #     self.output,
         # )
 
-        self.fig, _ = plt.subplots(self.layout[1], self.layout[0], figsize=(self.layout[0]*5/2, self.layout[1]*5/2))
+        self.fig, _ = plt.subplots(
+            self.layout[1],
+            self.layout[0],
+            figsize=(self.layout[0] * 5 / 2, self.layout[1] * 5 / 2),
+        )
         self.fig.set_dpi(600)
         plt.subplots_adjust(wspace=0, hspace=0)
-        plt.rcParams.update({
-            "lines.color": "white",
-            "patch.edgecolor": "white",
-            "text.color": "white",
-            "axes.facecolor": "white",
-            "axes.edgecolor": "lightgray",
-            "axes.labelcolor": "white",
-            "xtick.color": "white",
-            "ytick.color": "white",
-            "grid.color": "lightgray",
-            "figure.facecolor": "black",
-            "figure.edgecolor": "black",
-            "savefig.facecolor": "black",
-            "savefig.edgecolor": "black"}
-            )
-        
+        plt.rcParams.update(
+            {
+                "lines.color": "white",
+                "patch.edgecolor": "white",
+                "text.color": "white",
+                "axes.facecolor": "white",
+                "axes.edgecolor": "lightgray",
+                "axes.labelcolor": "white",
+                "xtick.color": "white",
+                "ytick.color": "white",
+                "grid.color": "lightgray",
+                "figure.facecolor": "black",
+                "figure.edgecolor": "black",
+                "savefig.facecolor": "black",
+                "savefig.edgecolor": "black",
+            }
+        )
+
         counter = 0
         for ax, img in zip(self.fig.axes, images_blended):
             ax.imshow(sitk.GetArrayFromImage(img))
@@ -291,8 +298,8 @@ class ScreenShotMaker:
                     ax.set_title("Coronal")
                 elif counter % 3 == 0:
                     ax.set_title("Axial")
-                ax.title.set_color('white')
-            
+                ax.title.set_color("white")
+
         plt.tight_layout()
         plt.savefig(os.path.join(self.output))
         # tiler_images = sitk.TileImageFilter()
