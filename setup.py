@@ -25,7 +25,6 @@ requirements = [
     "pytest",
     "coverage",
     "psutil",
-    "medcam",
     "black",
     "ipywidgets",
 ]
