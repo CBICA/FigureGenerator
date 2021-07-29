@@ -171,8 +171,8 @@ def alpha_blend(image, mask=None, alpha=0.5):
     if not mask:
         mask = sitk.Image(image.GetSize(), sitk.sitkUInt8)
         mask.CopyInformation(image)
-    
-    filter=sitk.LabelOverlayImageFilter()
+
+    filter = sitk.LabelOverlayImageFilter()
     filter.SetOpacity(alpha)
     # filter.SetColormap()
-    return filter.Execute(sitk.Cast(image,sitk.sitkUInt8),mask)
+    return filter.Execute(sitk.Cast(image, sitk.sitkUInt8), mask)
