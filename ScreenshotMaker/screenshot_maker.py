@@ -266,7 +266,7 @@ class ScreenShotMaker:
         plt.rcParams.update({
             "lines.color": "white",
             "patch.edgecolor": "white",
-            "text.color": "black",
+            "text.color": "white",
             "axes.facecolor": "white",
             "axes.edgecolor": "lightgray",
             "axes.labelcolor": "white",
@@ -290,6 +290,7 @@ class ScreenShotMaker:
                 ax.title.set_text("Sagittal")
             elif counter % 3 == 0:
                 ax.title.set_text("Coronal")
+            ax.title.set_color('white')
         plt.tight_layout()
         plt.savefig(os.path.join(self.output))
         # tiler_images = sitk.TileImageFilter()
