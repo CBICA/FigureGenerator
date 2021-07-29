@@ -35,7 +35,7 @@ class ScreenShotMaker:
         self.mask_opacity = args.mask_opacity
         self.border_pc = args.borderpc
         self.colormap = args.colormap.lower()
-        self.axis_row = args.axis_row
+        self.axisrow = args.axisrow
         self.calculate_bounds = args.bounded
         self.output = args.output
         _, ext = os.path.splitext(self.output)
@@ -44,10 +44,10 @@ class ScreenShotMaker:
             self.output = os.path.join(self.output, "screenshot.png")
         self.tiler = sitk.TileImageFilter()
 
-        if self.axis_row:
+        if self.axisrow:
             self.layout = (3 * len(self.images), 1 + len(self.masks), 0)
         else:
-            self.layout = (3, len(self.images) + len(self.masks), 0)
+            self.layout = (3, len(self.images) + len(self.images) * len(self.masks), 0)
 
         self.tiler.SetLayout(self.layout)
 
@@ -278,9 +278,18 @@ class ScreenShotMaker:
             "savefig.facecolor": "black",
             "savefig.edgecolor": "black"}
             )
+        
+        counter = 0
         for ax, img in zip(self.fig.axes, images_blended):
             ax.imshow(sitk.GetArrayFromImage(img))
             ax.axis("off")
+            counter += 1
+            if counter % 3 == 1:
+                ax.title.set_text("Axial")
+            elif counter % 3 == 2:
+                ax.title.set_text("Sagittal")
+            elif counter % 3 == 0:
+                ax.title.set_text("Coronal")
         plt.tight_layout()
         plt.savefig(os.path.join(self.output))
         # tiler_images = sitk.TileImageFilter()
