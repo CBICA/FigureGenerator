@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, division
-import argparse, datetime, sys, ast
+import argparse, datetime, ast
 import ScreenshotMaker as sm
 from ScreenshotMaker.screenshot_maker import ScreenShotMaker
 
