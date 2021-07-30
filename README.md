@@ -23,7 +23,7 @@ pip install FigureGenerator
 ```powershell
 python ./figure_generator -h
 usage: FigureGenerator [-h] -images IMAGES [-masks MASKS]
-                       [-mask_opacity MASK_OPACITY] [-colormap COLORMAP]
+                       [-mask_opacity MASK_OPACITY]
                        -output OUTPUT [-axisrow AXISROW] [-bounded BOUNDED]
                        [-borderpc BORDERPC] [-v]
 
