@@ -26,7 +26,7 @@ requirements = [
     "coverage",
     "psutil",
     "black",
-    "ipywidgets",
+    "matplotlib",
 ]
 
 setup(
