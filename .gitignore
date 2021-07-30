@@ -17,8 +17,6 @@ dist/*
 *_build*
 *build*
 debug.log
-vips*
 testing/data/*
 testing/data_output/*
 .coverage
-testing/config_segmentation_temp.yaml
