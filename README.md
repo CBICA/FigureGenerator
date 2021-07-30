@@ -7,7 +7,7 @@ This project helps create high quality figures for medical images for use in pre
 ## Installation
 
 ```powershell
-git clone https://github.com/sarthakpati/screenshot_maker.git
+git clone https://github.com/CBICA/FigureGenerator.git
 cd screenshot_maker
 conda create -n venv_screenshot python=3.7 -y
 conda activate venv_screenshot
@@ -60,7 +60,10 @@ python ./figure_generator \
 -output C:/input/fig.png 
 ```
 Gives the following output:
+[<img src="images/axisrow_false.png" width="450"/>](axisrow_false)
+<!-- full-size image
 ![axisrow_false](images/axisrow_false.png)
+ -->
 
 2. Horizontal screenshot of multiple images:
 ```powershell
