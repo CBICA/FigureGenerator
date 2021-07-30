@@ -1,6 +1,6 @@
 # Screenshot Maker
 
-This project helps create screenshots for medical images for use in presentations and/or manuscripts.
+This project helps create high quality figures for medical images for use in presentations and/or manuscripts.
 
 ## Installation
 
