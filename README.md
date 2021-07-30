@@ -60,7 +60,10 @@ python ./figure_generator \
 -output C:/input/fig.png 
 ```
 Gives the following output:
+[<img src="images/axisrow_false.png" width="450"/>](axisrow_false)
+<!-- full-size image
 ![axisrow_false](images/axisrow_false.png)
+ -->
 
 2. Horizontal screenshot of multiple images:
 ```powershell
