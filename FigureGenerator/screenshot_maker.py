@@ -225,7 +225,7 @@ class FigureGenerator:
         only_images, images_with_mask = [], []
         # first put the image slices
         for image_slice in image_slices:
-            for i in range(len(image_slice)):
+            for i, _ in enumerate(image_slice):
                 blended_image = alpha_blend(image_slice[i])
 
                 images_blended.append(blended_image)
@@ -235,7 +235,7 @@ class FigureGenerator:
         if self.mask_present:
             for image_slice in image_slices:
                 for mask_slice in mask_slices:
-                    for i in range(len(image_slice)):
+                    for i, _ in enumerate(image_slice):
 
                         mask = None
                         if mask_slice[i] is not None:
