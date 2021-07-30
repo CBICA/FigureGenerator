@@ -7,7 +7,7 @@ This project helps create high quality figures for medical images for use in pre
 ## Installation
 
 ```powershell
-git clone https://github.com/sarthakpati/screenshot_maker.git
+git clone https://github.com/CBICA/FigureGenerator.git
 cd screenshot_maker
 conda create -n venv_screenshot python=3.7 -y
 conda activate venv_screenshot
