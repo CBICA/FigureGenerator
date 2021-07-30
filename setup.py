@@ -11,7 +11,7 @@ with open("README.md") as readme_file:
 import sys, re
 
 try:
-    filepath = "ScreenshotMaker/version.py"
+    filepath = "FigureGenerator/version.py"
     version_file = open(filepath)
     (__version__,) = re.findall('__version__ = "(.*)"', version_file.read())
 
@@ -30,13 +30,13 @@ requirements = [
 ]
 
 setup(
-    name="ScreenshotMaker",
+    name="FigureGenerator",
     version=__version__,
     author="Sarthak Pati",  # alphabetical order
     author_email="software@cbica.upenn.edu",
     python_requires=">=3.6",
     packages=find_packages(),
-    scripts=["screenshot_run"],
+    scripts=["figure_generator"],
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Science/Research",
@@ -53,6 +53,6 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     include_package_data=True,
-    keywords="medical-imaging, screenshot",
+    keywords="medical-imaging, screenshot, figure-generator, publication",
     zip_safe=False,
 )

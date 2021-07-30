@@ -3,8 +3,8 @@
 
 from __future__ import print_function, division
 import argparse, datetime, ast
-import ScreenshotMaker as sm
-from ScreenshotMaker.screenshot_maker import ScreenShotMaker
+import FigureGenerator as sm
+from FigureGenerator.screenshot_maker import FigureGenerator
 
 
 if __name__ == "__main__":
@@ -93,6 +93,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    sm = ScreenShotMaker(args)
+    sm = FigureGenerator(args)
 
     print("Finished.")

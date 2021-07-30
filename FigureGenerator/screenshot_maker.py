@@ -15,7 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class ScreenShotMaker:
+class FigureGenerator:
     def __init__(self, args):
         # change comma-separated string to list for images and masks
         self.images = args.images.split(",")

@@ -15,14 +15,14 @@ pip install -e .
 OR directly via Pip:
 
 ```powershell
-pip install ScreenshotMaker
+pip install FigureGenerator
 ```
 
 ## Usage
 
 ```powershell
-python ./screenshot_run -h
-usage: ScreenshotMaker [-h] -images IMAGES [-masks MASKS]
+python ./figure_generator -h
+usage: FigureGenerator [-h] -images IMAGES [-masks MASKS]
                        [-mask_opacity MASK_OPACITY] [-colormap COLORMAP]
                        -output OUTPUT [-axisrow AXISROW] [-bounded BOUNDED]
                        [-borderpc BORDERPC] [-v]
@@ -51,7 +51,7 @@ optional arguments:
 
 1. Vertical screenshot of multiple images:
 ```powershell
-python ./screenshot_run \
+python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow False \
@@ -62,7 +62,7 @@ Gives the following output:
 
 2. Horizontal screenshot of multiple images:
 ```powershell
-python ./screenshot_run \
+python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow True \
