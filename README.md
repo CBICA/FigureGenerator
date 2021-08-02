@@ -76,6 +76,30 @@ python ./figure_generator \
 Gives the following output:
 ![axisrow_true](images/axisrow_true.png)
 
+3. Horizontal screenshot of multiple images with image-based bounding:
+```powershell
+python ./figure_generator \
+-images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
+-masks C:/input/subject_001_seg.nii.gz \
+-axisrow True \
+-bounded True \
+-output C:/input/fig.png 
+```
+Gives the following output:
+![axisrow_true](images/fig_axistrue_boundedimage.png)
+
+4. Horizontal screenshot of multiple images:
+```powershell
+python ./figure_generator \
+-images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
+-masks C:/input/subject_001_seg.nii.gz \
+-axisrow True \
+-boundedmask True \
+-output C:/input/fig.png 
+```
+Gives the following output:
+![axisrow_true](images/fig_axistrue_boundedmask.png)
+
 ## Feedback
 
 Please post on GitHub [Discussions](https://github.com/CBICA/FigureGenerator/discussions) or post an [issue](https://github.com/CBICA/FigureGenerator/issues/new/choose).
