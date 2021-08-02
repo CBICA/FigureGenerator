@@ -59,6 +59,7 @@ python ./figure_generator \
 -output C:/input/fig.png 
 ```
 Gives the following output:
+
 [<img src="images/axisrow_false.png" width="450"/>](axisrow_false)
 <!-- full-size image
 ![axisrow_false](images/axisrow_false.png)
@@ -73,7 +74,11 @@ python ./figure_generator \
 -output C:/input/fig.png 
 ```
 Gives the following output:
+
+[<img src="images/axisrow_true.png" width="900"/>](axisrow_false)
+<!-- full-size image
 ![axisrow_true](images/axisrow_true.png)
+ -->
 
 3. Horizontal screenshot of multiple images with image-based bounding:
 ```powershell
