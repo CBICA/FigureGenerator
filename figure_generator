@@ -34,7 +34,7 @@ if __name__ == "__main__":
         required=False,
     )
     parser.add_argument(
-        "-mask_opacity",
+        "-opacity",
         type=float,
         default=0.5,
         help="Mask opacity between 0-1",
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         required=False,
     )
     parser.add_argument(
-        "-boundedmask",
+        "-boundmask",
         type=ast.literal_eval,
         default=False,
         help="Construct bounding box around binarized ground truth",
