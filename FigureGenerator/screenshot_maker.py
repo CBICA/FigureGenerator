@@ -37,6 +37,10 @@ class FigureGenerator:
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
         self.calculate_bounds = args.bounded
+        self.calculate_bounds_mask = args.boundedmask
+        if self.calculate_bounds and self.calculate_bounds_mask:
+            print("WARNING: Both image and mask bounding cannot be enabled, using only image bounding.")
+            self.calculate_bounds_mask = False
         self.output = args.output
         _, ext = os.path.splitext(self.output)
         if ext == "" or ext is None:
@@ -85,6 +89,10 @@ class FigureGenerator:
 
         ## 3d-specific calculations start here.
         if self.calculate_bounds:
+            bounding_box = get_bounding_box(
+                input_images[0], [input_images[0]], self.border_pc
+            )
+        elif self.calculate_bounds_mask:
             bounding_box = get_bounding_box(
                 input_images[0], input_masks, self.border_pc
             )
