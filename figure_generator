@@ -72,6 +72,13 @@ if __name__ == "__main__":
         "-bounded",
         type=ast.literal_eval,
         default=False,
+        help="Construct bounding box around non-zero pixels of input images",
+        required=False,
+    )
+    parser.add_argument(
+        "-boundedmask",
+        type=ast.literal_eval,
+        default=False,
         help="Construct bounding box around binarized ground truth",
         required=False,
     )
