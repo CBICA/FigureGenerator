@@ -24,10 +24,9 @@ pip install FigureGenerator
 
 ```powershell
 python ./figure_generator -h
-usage: FigureGenerator [-h] -images IMAGES [-masks MASKS]
-                       [-mask_opacity MASK_OPACITY]
-                       -output OUTPUT [-axisrow AXISROW] [-bounded BOUNDED]
-                       [-borderpc BORDERPC] [-v]
+usage: ScreenshotMaker [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
+                       -output OUTPUT [-axisrow AXISROW] [-bounded BOUNDED] 
+                       [-boundmask BOUNDMASK] [-borderpc BORDERPC] [-v]     
 
 Constructing screenshots from medical images.
 
@@ -40,11 +39,11 @@ optional arguments:
   -h, --help            show this help message and exit
   -images IMAGES        Input image files (comma-separated without any spaces in path and co-registered)
   -masks MASKS          Mask files  (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth
-  -mask_opacity MASK_OPACITY
-                        Mask opacity between 0-1
+  -opacity OPACITY      Mask opacity between 0-1
   -output OUTPUT        Output screenshot file
   -axisrow AXISROW      Put all axes views across each column and stack images and blends in rows, defaults to False
-  -bounded BOUNDED      Construct bounding box around binarized ground truth
+  -bounded BOUNDED      Construct bounding box around non-zero pixels of input images
+  -boundmask BOUNDMASK  Construct bounding box around binarized ground truth
   -borderpc BORDERPC    Percentage of size to use as border around bounding box (used only when mask and bounded are defined)
   -v, --version         Show program's version number and exit.
 ```
@@ -96,7 +95,7 @@ python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow True \
--boundedmask True \
+-boundmask True \
 -output C:/input/fig.png 
 ```
 Gives the following output:
