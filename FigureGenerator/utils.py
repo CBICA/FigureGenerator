@@ -132,6 +132,26 @@ def resample_image(
     return padded_image
 
 
+def binarize_image(image):
+    """
+    Binarize the input image.
+
+    Args:
+        image (SimpleITK.Image): The input image, all pixel values are expected to be between 0 and 255.
+
+    Returns:
+        SimpleITK.Image: The binarized image.
+    """
+    max_filter = sitk.MinimumMaximumImageFilter()
+    max_filter.Execute(image)
+    thresholder = sitk.BinaryThresholdImageFilter()
+    thresholder.SetOutsideValue(0)
+    thresholder.SetInsideValue(1)
+    thresholder.SetLowerThreshold(1)
+    thresholder.SetUpperThreshold(max_filter.GetMaximum())
+    return thresholder.Execute(image)
+
+
 def get_bounding_box(image, mask_list, border_pc):
     """
     Get the bounding box of the image based on the first mask after it is binarized.
@@ -146,15 +166,8 @@ def get_bounding_box(image, mask_list, border_pc):
     """
     size = image.GetSize()
     if mask_list is not None:
-        max_filter = sitk.MinimumMaximumImageFilter()
-        max_filter.Execute(mask_list[0])
-        thresholder = sitk.BinaryThresholdImageFilter()
-        thresholder.SetOutsideValue(0)
-        thresholder.SetInsideValue(1)
-        thresholder.SetLowerThreshold(1)
-        thresholder.SetUpperThreshold(max_filter.GetMaximum())
         extractor = sitk.LabelStatisticsImageFilter()
-        extractor.Execute(image, thresholder.Execute(mask_list[0]))
+        extractor.Execute(image, binarize_image(mask_list[0]))
         bb = list(extractor.GetBoundingBox(1))
         bb[0] = max(0, math.floor(bb[0] - border_pc * size[0]))
         bb[2] = max(0, math.floor(bb[2] - border_pc * size[1]))
