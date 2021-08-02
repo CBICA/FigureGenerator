@@ -60,8 +60,11 @@ python ./figure_generator \
 ```
 Gives the following output:
 
-[<img width="450" align="center" src="images/axisrow_false.png"/>](axisrow_false)
+<p align="center">
+  <img width="450" src="images/axisrow_false.png">
+</p>
 <!-- full-size image
+[<img src="images/axisrow_false.png" width="450"/>](axisrow_false)
 ![axisrow_false](images/axisrow_false.png)
  -->
 
