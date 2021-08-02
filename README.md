@@ -88,6 +88,8 @@ python ./figure_generator \
 Gives the following output:
 ![axisrow_true](images/fig_axistrue_boundedimage.png)
 
+**Note**: This can be used with vertical orientation as well, by passing `-axisrow False` to the command.
+
 4. Horizontal screenshot of multiple images:
 ```powershell
 python ./figure_generator \
@@ -99,6 +101,8 @@ python ./figure_generator \
 ```
 Gives the following output:
 ![axisrow_true](images/fig_axistrue_boundedmask.png)
+
+**Note**: This can be used with vertical orientation as well, by passing `-axisrow False` to the command.
 
 ## Feedback
 
