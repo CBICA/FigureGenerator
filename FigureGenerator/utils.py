@@ -1,6 +1,24 @@
 import math
 import SimpleITK as sitk
 
+## color_map look-up table
+# colomap_lut = {
+#     "red": sitk.ScalarToRGBColormapImageFilter.Red,
+#     "green": sitk.ScalarToRGBColormapImageFilter.Green,
+#     "blue": sitk.ScalarToRGBColormapImageFilter.Blue,
+#     "grey": sitk.ScalarToRGBColormapImageFilter.Grey,
+#     "hot": sitk.ScalarToRGBColormapImageFilter.Hot,
+#     "cool": sitk.ScalarToRGBColormapImageFilter.Cool,
+#     "spring": sitk.ScalarToRGBColormapImageFilter.Spring,
+#     "summer": sitk.ScalarToRGBColormapImageFilter.Summer,
+#     "autumn": sitk.ScalarToRGBColormapImageFilter.Autumn,
+#     "winter": sitk.ScalarToRGBColormapImageFilter.Winter,
+#     "copper": sitk.ScalarToRGBColormapImageFilter.Copper,
+#     "jet": sitk.ScalarToRGBColormapImageFilter.Jet,
+#     "hsv": sitk.ScalarToRGBColormapImageFilter.HSV,
+#     "overunder": sitk.ScalarToRGBColormapImageFilter.OverUnder,
+# }
+
 
 def sanity_checker_base(file_reader_base, images_to_check):
     """
