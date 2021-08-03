@@ -62,6 +62,8 @@ class FigureGenerator:
         file_reader_base.SetFileName(self.images[0])
         file_reader_base.ReadImageInformation()
 
+        assert file_reader_base.GetImageDimension() == 3, "Image dimension is not 3D."
+
         if sanity_checker_base(file_reader_base, self.images[1:]):
             # only check masks if sanity check for images passes
             sanity_checker_base(file_reader_base, self.masks)
