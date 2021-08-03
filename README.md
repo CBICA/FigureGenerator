@@ -1,6 +1,9 @@
 # Figure Generator
 
+[![PyPi](https://img.shields.io/pypi/v/FigureGenerator)](https://pypi.org/project/FigureGenerator/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/608de602c1bd4bec810efb0d08f269e6)](https://www.codacy.com/gh/CBICA/FigureGenerator/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CBICA/FigureGenerator&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/608de602c1bd4bec810efb0d08f269e6)](https://www.codacy.com/gh/CBICA/FigureGenerator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=CBICA/FigureGenerator&utm_campaign=Badge_Coverage)
+[![Code style](https://img.shields.io/badge/Code%20Style-black-000000.svg)](https://github.com/psf/black)
 
 This project helps create high quality figures for medical images for use in presentations and/or manuscripts.
 
