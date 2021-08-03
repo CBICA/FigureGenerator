@@ -61,11 +61,11 @@ python ./figure_generator \
 Gives the following output:
 
 <p align="center">
-  <img width="450" src="images/axisrow_false.png">
+  <img width="450" src="images/fig_axisrowfalse.png">
 </p>
 <!-- full-size image
-[<img src="images/axisrow_false.png" width="450"/>](axisrow_false)
-![axisrow_false](images/axisrow_false.png)
+[<img src="images/fig_axisrowfalse.png" width="450"/>](axisrow_false)
+![axisrow_false](images/fig_axisrowfalse.png)
  -->
 
 2. Horizontal screenshot of multiple images:
@@ -78,9 +78,9 @@ python ./figure_generator \
 ```
 Gives the following output:
 
-[<img src="images/axisrow_true.png" width="900"/>](axisrow_true)
+[<img src="images/fig_axisrowtrue.png" width="900"/>](axisrow_true)
 <!-- full-size image
-![axisrow_true](images/axisrow_true.png)
+![axisrow_true](images/fig_axisrowtrue.png)
  -->
 
 3. Horizontal screenshot of multiple images with image-based bounding:
