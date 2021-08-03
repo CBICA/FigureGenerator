@@ -1,10 +1,12 @@
 from pathlib import Path
-import requests, zipfile, io, os, argparse
+import requests, zipfile, io, os, argparse, sys
 
 from FigureGenerator.screenshot_maker import FigureGenerator
+from FigureGenerator.utils import sanity_checker_with_files
 
 ## global variables
 inputDir = os.path.abspath(os.path.normpath("./testing/data"))
+baseImagesDir = os.path.abspath(os.path.normpath("./images"))
 args = argparse.Namespace
 args.images = (
     os.path.join(inputDir, "fl.nii.gz")
@@ -13,10 +15,15 @@ args.images = (
     + ","
     + os.path.join(inputDir, "t2.nii.gz")
     + ","
-    + os.path.join(inputDir, "t1ce.nii.gz")
+    + os.path.join(inputDir, "t1c.nii.gz")
 )
 args.masks = os.path.join(inputDir, "seg.nii.gz")
-args.output = os.path.join(inputDir, "output.nii.gz")
+args.output = os.path.join(inputDir, "output.png")
+args.opacity = 0.5
+args.axisrow = True
+args.boundimg = False
+args.boundmask = False
+args.borderpc = 0.1
 
 
 def test_download_data():
@@ -36,6 +43,14 @@ def test_axis_true_bounded_false():
     if os.path.exists(args.output):
         os.remove(args.output)
     args.axisrow = False
+    fig_generator = FigureGenerator(args)
+    fig_generator.save_image(fig_generator.output)
+    file_to_check = os.path.join(baseImagesDir, "fig_axisrowfalse.png")
+    if not(sanity_checker_with_files(fig_generator.output, file_to_check)):
+        sys.exit(1)
+    
+    print("Passed")
+
 
 
 def test_axis_false_bounded_false():
