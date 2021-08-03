@@ -1,5 +1,5 @@
 from pathlib import Path
-import requests, zipfile, io, os, argparse, sys
+import requests, zipfile, io, os, argparse
 
 from FigureGenerator.screenshot_maker import FigureGenerator
 from FigureGenerator.utils import sanity_checker_with_files
@@ -27,9 +27,7 @@ args.borderpc = 0.1
 
 
 def test_download_data():
-    """
-    This function downloads the sample data, which is the first step towards getting everything ready
-    """
+    """This function downloads the sample data, which is the first step towards getting everything ready"""
     urlToDownload = "https://github.com/CBICA/FigureGenerator/raw/main/testing/data.zip"
     # do not download data again
     if not Path(os.path.join(inputDir, "fl.nii.gz")).exists():
