@@ -94,9 +94,9 @@ python ./figure_generator \
 ```
 Gives the following output:
 
-[<img src="images/fig_axistrue_boundedimage.png" width="900"/>](axistrue_boundedimage)
+[<img src="images/fig_axisrowtrue_boundedimage.png" width="900"/>](axistrue_boundedimage)
 <!-- full-size image
-![axisrow_true](images/fig_axistrue_boundedimage.png)
+![axisrow_true](images/fig_axisrowtrue_boundedimage.png)
  -->
 
 **Note**: This can be used with vertical orientation as well, by passing `-axisrow False` to the command.
@@ -113,9 +113,9 @@ python ./figure_generator \
 ```
 Gives the following output:
 
-[<img src="images/fig_axistrue_boundedmask.png" width="900"/>](axistrue_boundedmask)
+[<img src="images/fig_axisrowtrue_boundedmask.png" width="900"/>](axistrue_boundedmask)
 <!-- full-size image
-![axisrow_true](images/fig_axistrue_boundedmask.png)
+![axisrow_true](images/fig_axisrowtrue_boundedmask.png)
  -->
 
 **Note**: This can be used with vertical orientation as well, by passing `-axisrow False` to the command.
