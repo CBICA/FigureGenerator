@@ -28,6 +28,10 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest build wheel
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install -e .
+    - name: Run tests
+      run: |
+        pytest
     - name: Build distributions
       run: python setup.py sdist
 
