@@ -41,7 +41,9 @@ class FigureGenerator:
             self.border_pc = 0.001
         self.calculate_bounds_mask = args.boundmask
         if self.calculate_bounds and self.calculate_bounds_mask:
-            print("WARNING: Both image and mask bounding cannot be enabled, using only image bounding.")
+            print(
+                "WARNING: Both image and mask bounding cannot be enabled, using only image bounding."
+            )
             self.calculate_bounds_mask = False
         self.output = args.output
         _, ext = os.path.splitext(self.output)

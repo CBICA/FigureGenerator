@@ -181,7 +181,7 @@ def get_bounding_box(image, mask_list, border_pc):
         bb[5] = min(size[2], math.floor(bb[5] + border_pc * size[2]))
         full_max = max(bb[1], bb[3], bb[5])
         bb[1], bb[3], bb[5] = full_max, full_max, full_max
-        
+
         return bb
     else:
         if len(size) == 3:
