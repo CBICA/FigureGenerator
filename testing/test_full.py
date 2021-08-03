@@ -46,10 +46,12 @@ def test_axis_true_bounded_false():
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowfalse.png")
-    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row false bounded false failed"
-    
-    print("Passed")
+    assert sanity_checker_with_files(
+        args.output, file_to_check
+    ), "axis row false bounded false failed"
 
+    os.remove(args.output)
+    print("Passed")
 
 
 def test_axis_false_bounded_false():
@@ -59,8 +61,11 @@ def test_axis_false_bounded_false():
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue.png")
-    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded false failed"
-    
+    assert sanity_checker_with_files(
+        args.output, file_to_check
+    ), "axis row true bounded false failed"
+
+    os.remove(args.output)
     print("Passed")
 
 
@@ -72,8 +77,11 @@ def test_axis_true_bounded_image():
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedimage.png")
-    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded image failed"
-    
+    assert sanity_checker_with_files(
+        args.output, file_to_check
+    ), "axis row true bounded image failed"
+
+    os.remove(args.output)
     print("Passed")
 
 
@@ -85,6 +93,9 @@ def test_axis_true_bounded_mask():
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedmask.png")
-    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded mask failed"
-    
+    assert sanity_checker_with_files(
+        args.output, file_to_check
+    ), "axis row true bounded mask failed"
+
+    os.remove(args.output)
     print("Passed")
