@@ -46,8 +46,7 @@ def test_axis_true_bounded_false():
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowfalse.png")
-    if not(sanity_checker_with_files(fig_generator.output, file_to_check)):
-        sys.exit(1)
+    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row false bounded false failed"
     
     print("Passed")
 
@@ -57,6 +56,12 @@ def test_axis_false_bounded_false():
     if os.path.exists(args.output):
         os.remove(args.output)
     args.axisrow = True
+    fig_generator = FigureGenerator(args)
+    fig_generator.save_image(fig_generator.output)
+    file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue.png")
+    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded false failed"
+    
+    print("Passed")
 
 
 def test_axis_true_bounded_image():
@@ -64,6 +69,12 @@ def test_axis_true_bounded_image():
         os.remove(args.output)
     args.axisrow = True
     args.boundimg = True
+    fig_generator = FigureGenerator(args)
+    fig_generator.save_image(fig_generator.output)
+    file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedimage.png")
+    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded image failed"
+    
+    print("Passed")
 
 
 def test_axis_true_bounded_mask():
@@ -71,3 +82,9 @@ def test_axis_true_bounded_mask():
         os.remove(args.output)
     args.axisrow = True
     args.boundmask = True
+    fig_generator = FigureGenerator(args)
+    fig_generator.save_image(fig_generator.output)
+    file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedmask.png")
+    assert(sanity_checker_with_files(args.output, file_to_check)), "axis row true bounded mask failed"
+    
+    print("Passed")
