@@ -100,6 +100,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    sm = FigureGenerator(args)
+    fig_generator = FigureGenerator(args)
+    fig_generator.save_image(fig_generator.output)
 
     print("Finished.")
