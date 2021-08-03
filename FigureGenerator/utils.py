@@ -33,6 +33,9 @@ def sanity_checker_base(file_reader_base, images_to_check):
         ValueError: Origin mismatch in the images.
         ValueError: Orientation mismatch in the images.
         ValueError: Spacing mismatch in the images.
+
+    Returns:
+        bool: Result of sanity checking.
     """
     if images_to_check is None:
         return True
@@ -55,6 +58,29 @@ def sanity_checker_base(file_reader_base, images_to_check):
             raise ValueError("Spacing for subject are not consistent.")
 
     return True
+
+
+def sanity_checker_with_files(image_file_1, image_file_2):
+    """
+    This function performs sanity check on 2 image files WITHOUT loading images into memory.
+
+    Args:
+        image_file_1 (SimpleITK.Image): First image to check.
+        image_file_2 (SimpleITK.Image): Second image to check.
+
+    Raises:
+        ValueError: Dimension mismatch in the images.
+        ValueError: Origin mismatch in the images.
+        ValueError: Orientation mismatch in the images.
+        ValueError: Spacing mismatch in the images.
+
+    Returns:
+        bool: Result of sanity checking.
+    """
+    file_reader_current = sitk.ImageFileReader()
+    file_reader_current.SetFileName(image_file_1)
+    file_reader_current.ReadImageInformation()
+    return sanity_checker_base(file_reader_current, [image_file_2])
 
 
 def rescale_intensity(image):
