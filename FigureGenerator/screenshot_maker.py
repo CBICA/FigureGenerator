@@ -199,7 +199,6 @@ class FigureGenerator:
             )
 
         self.max_id = max_id
-        self.get_image_to_write()
 
     def get_image_and_mask_slices(self, image_list):
         """
@@ -224,7 +223,7 @@ class FigureGenerator:
             output_slices.append(current_image_slices)
         return output_slices
 
-    def get_image_to_write(self):
+    def save_image(self, output_file):
         image_slices = self.get_image_and_mask_slices(self.input_images_bounded)
         mask_slices = None
         if self.input_masks_bounded is not None:
@@ -299,4 +298,4 @@ class FigureGenerator:
                 ax.title.set_color("white")
 
         plt.tight_layout()
-        plt.savefig(os.path.join(self.output))
+        plt.savefig(os.path.join(output_file))
