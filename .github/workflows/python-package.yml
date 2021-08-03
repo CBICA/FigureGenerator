@@ -26,12 +26,18 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest build wheel
+        python -m pip install flake8 pytest build wheel coverage
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install -e .
-    - name: Run tests
+    - name: Test with pytest
       run: |
-        pytest
+        pytest --cov=. --cov-report=xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        flags: unittests
     - name: Build distributions
       run: python setup.py sdist
 
