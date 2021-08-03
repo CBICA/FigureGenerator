@@ -25,8 +25,8 @@ pip install FigureGenerator
 ```powershell
 python ./figure_generator -h
 usage: ScreenshotMaker [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
-                       -output OUTPUT [-axisrow AXISROW] [-bounded BOUNDED] 
-                       [-boundmask BOUNDMASK] [-borderpc BORDERPC] [-v]     
+                       -output OUTPUT [-axisrow AXISROW] [-boundimg BOUNDIMG]
+                       [-boundmask BOUNDMASK] [-borderpc BORDERPC] [-v]
 
 Constructing screenshots from medical images.
 
@@ -42,7 +42,7 @@ optional arguments:
   -opacity OPACITY      Mask opacity between 0-1
   -output OUTPUT        Output screenshot file
   -axisrow AXISROW      Put all axes views across each column and stack images and blends in rows, defaults to False
-  -bounded BOUNDED      Construct bounding box around non-zero pixels of input images
+  -boundimg BOUNDIMG    Construct bounding box around non-zero pixels of input images
   -boundmask BOUNDMASK  Construct bounding box around binarized ground truth
   -borderpc BORDERPC    Percentage of size to use as border around bounding box (used only when mask and bounded are defined)
   -v, --version         Show program's version number and exit.
