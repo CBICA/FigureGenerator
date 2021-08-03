@@ -108,6 +108,7 @@ python ./figure_generator \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow True \
 -boundmask True \
+-borderpc 0.001 \
 -output C:/input/fig.png 
 ```
 Gives the following output:
