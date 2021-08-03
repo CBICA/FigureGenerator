@@ -50,14 +50,11 @@ class FigureGenerator:
         if ext == "" or ext is None:
             pathlib.Path(self.output).mkdir(parents=True, exist_ok=True)
             self.output = os.path.join(self.output, "screenshot.png")
-        self.tiler = sitk.TileImageFilter()
 
         if self.axisrow:
             self.layout = (3 * len(self.images), 1 + len(self.masks), 0)
         else:
             self.layout = (3, len(self.images) + len(self.images) * len(self.masks), 0)
-
-        self.tiler.SetLayout(self.layout)
 
         ## sanity checker
         # read the first image and save that for comparison
