@@ -27,6 +27,7 @@ requirements = [
     "psutil",
     "black",
     "matplotlib",
+    "requests",
 ]
 
 setup(
