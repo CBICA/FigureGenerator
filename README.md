@@ -50,7 +50,7 @@ optional arguments:
 
 ### Examples
 
-1. Vertical screenshot of multiple images:
+1. **Vertical** screenshot of multiple images:
 ```powershell
 python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
@@ -68,7 +68,7 @@ Gives the following output:
 ![axisrow_false](images/fig_axisrowfalse.png)
  -->
 
-2. Horizontal screenshot of multiple images:
+2. **Horizontal** screenshot of multiple images:
 ```powershell
 python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
@@ -83,7 +83,7 @@ Gives the following output:
 ![axisrow_true](images/fig_axisrowtrue.png)
  -->
 
-3. Horizontal screenshot of multiple images with image-based bounding:
+3. Horizontal screenshot of multiple images with **image-based bounding**:
 ```powershell
 python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
@@ -101,7 +101,7 @@ Gives the following output:
 
 **Note**: This can be used with vertical orientation as well, by passing `-axisrow False` to the command.
 
-4. Horizontal screenshot of multiple images:
+4. Horizontal screenshot of multiple images with **mask-based bounding**:
 ```powershell
 python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
