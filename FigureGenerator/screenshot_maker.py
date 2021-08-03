@@ -33,11 +33,11 @@ class FigureGenerator:
         #     self.slice_numbers = args.slice.split(",")
         # else:
         #     self.slice_numbers = None
-        self.mask_opacity = args.mask_opacity
+        self.mask_opacity = args.opacity
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
-        self.calculate_bounds = args.bounded
-        self.calculate_bounds_mask = args.boundedmask
+        self.calculate_bounds = args.boundimg
+        self.calculate_bounds_mask = args.boundmask
         if self.calculate_bounds and self.calculate_bounds_mask:
             print("WARNING: Both image and mask bounding cannot be enabled, using only image bounding.")
             self.calculate_bounds_mask = False

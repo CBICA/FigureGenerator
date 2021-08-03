@@ -69,7 +69,7 @@ if __name__ == "__main__":
         required=False,
     )
     parser.add_argument(
-        "-bounded",
+        "-boundimg",
         type=ast.literal_eval,
         default=False,
         help="Construct bounding box around non-zero pixels of input images",
