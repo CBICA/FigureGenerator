@@ -65,8 +65,8 @@ def sanity_checker_with_files(image_file_1, image_file_2):
     This function performs sanity check on 2 image files WITHOUT loading images into memory.
 
     Args:
-        image_file_1 (SimpleITK.Image): First image to check.
-        image_file_2 (SimpleITK.Image): Second image to check.
+        image_file_1 (str): First image to check.
+        image_file_2 (str): Second image to check.
 
     Raises:
         ValueError: Dimension mismatch in the images.
@@ -81,6 +81,31 @@ def sanity_checker_with_files(image_file_1, image_file_2):
     file_reader_current.SetFileName(image_file_1)
     file_reader_current.ReadImageInformation()
     return sanity_checker_base(file_reader_current, [image_file_2])
+
+
+def sanity_checker_with_images(image_file_1, image_file_2):
+    """
+    This function performs sanity check on 2 images WITHOUT loading images into memory.
+
+    Args:
+        image_file_1 (str): First image to check.
+        image_file_2 (str): Second image to check.
+
+    Returns:
+        bool: Result of sanity checking.
+    """
+    
+    img_1 = sitk.ReadImage(image_file_1)
+    img_2 = sitk.ReadImage(image_file_2)
+
+    channels_1 = [sitk.VectorIndexSelectionCast(img_1,i, sitk.sitkFloat32) for i in range(img_1.GetNumberOfComponentsPerPixel())]
+    channels_2 = [sitk.VectorIndexSelectionCast(img_2,i, sitk.sitkFloat32) for i in range(img_2.GetNumberOfComponentsPerPixel())]
+
+    for i in range(len(channels_1)):
+        if channels_1[i] != channels_2[i]:
+            return False
+
+    return True
 
 
 def rescale_intensity(image):
