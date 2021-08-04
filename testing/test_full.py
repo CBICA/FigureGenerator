@@ -49,7 +49,7 @@ def test_axis_true_bounded_false():
         args.output, file_to_check
     ), "axis row false bounded false failed"
 
-    if not(sanity_checker_with_images(args.output, file_to_check)):
+    if not (sanity_checker_with_images(args.output, file_to_check)):
         print("Channel information should be identical")
 
     os.remove(args.output)
@@ -67,7 +67,7 @@ def test_axis_false_bounded_false():
         args.output, file_to_check
     ), "axis row true bounded false failed"
 
-    if not(sanity_checker_with_images(args.output, file_to_check)):
+    if not (sanity_checker_with_images(args.output, file_to_check)):
         print("Channel information should be identical")
 
     os.remove(args.output)
@@ -86,7 +86,7 @@ def test_axis_true_bounded_image():
         args.output, file_to_check
     ), "axis row true bounded image failed"
 
-    if not(sanity_checker_with_images(args.output, file_to_check)):
+    if not (sanity_checker_with_images(args.output, file_to_check)):
         print("Channel information should be identical")
 
     os.remove(args.output)
@@ -105,7 +105,7 @@ def test_axis_true_bounded_mask():
         args.output, file_to_check
     ), "axis row true bounded mask failed"
 
-    if not(sanity_checker_with_images(args.output, file_to_check)):
+    if not (sanity_checker_with_images(args.output, file_to_check)):
         print("Channel information should be identical")
 
     os.remove(args.output)
