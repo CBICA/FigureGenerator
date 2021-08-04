@@ -3,7 +3,7 @@ import requests, zipfile, io, os, argparse
 import SimpleITK as sitk
 
 from FigureGenerator.screenshot_maker import FigureGenerator
-from FigureGenerator.utils import sanity_checker_with_files, sanity_checker_with_images
+from FigureGenerator.utils import sanity_checker_with_files
 
 ## global variables
 inputDir = os.path.abspath(os.path.normpath("./testing/data"))
