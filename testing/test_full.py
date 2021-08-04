@@ -1,8 +1,9 @@
 from pathlib import Path
 import requests, zipfile, io, os, argparse
+import SimpleITK as sitk
 
 from FigureGenerator.screenshot_maker import FigureGenerator
-from FigureGenerator.utils import sanity_checker_with_files
+from FigureGenerator.utils import sanity_checker_with_files, sanity_checker_with_images
 
 ## global variables
 inputDir = os.path.abspath(os.path.normpath("./testing/data"))
@@ -48,6 +49,9 @@ def test_axis_true_bounded_false():
         args.output, file_to_check
     ), "axis row false bounded false failed"
 
+    if not(sanity_checker_with_images(args.output, file_to_check)):
+        print("Channel information should be identical")
+
     os.remove(args.output)
     print("Passed")
 
@@ -62,6 +66,9 @@ def test_axis_false_bounded_false():
     assert sanity_checker_with_files(
         args.output, file_to_check
     ), "axis row true bounded false failed"
+
+    if not(sanity_checker_with_images(args.output, file_to_check)):
+        print("Channel information should be identical")
 
     os.remove(args.output)
     print("Passed")
@@ -79,6 +86,9 @@ def test_axis_true_bounded_image():
         args.output, file_to_check
     ), "axis row true bounded image failed"
 
+    if not(sanity_checker_with_images(args.output, file_to_check)):
+        print("Channel information should be identical")
+
     os.remove(args.output)
     print("Passed")
 
@@ -94,6 +104,9 @@ def test_axis_true_bounded_mask():
     assert sanity_checker_with_files(
         args.output, file_to_check
     ), "axis row true bounded mask failed"
+
+    if not(sanity_checker_with_images(args.output, file_to_check)):
+        print("Channel information should be identical")
 
     os.remove(args.output)
     print("Passed")
