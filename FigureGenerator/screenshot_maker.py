@@ -38,14 +38,24 @@ class FigureGenerator:
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
 
-        # this is used for y-axis in subplots
+        ## this is used for y-axis in subplots
         self.ylabel_titles = args.ylabels
+        # if ylabels have been defined, then use that but perform sanity checks
         if self.ylabel_titles is not None:
             self.ylabel_titles = self.ylabel_titles.split(",")
-            if len(self.ylabel_titles) != len(self.images) * (1 + len(self.masks)):
+            # the length of the ylabels needs to be appropriate based on the axisrow
+            len_for_comparison = 0
+            if self.axisrow:
+                len_for_comparison = 1 + len(self.masks)
+            else:
+                len_for_comparison = len(self.images) * (1 + len(self.masks))
+            # if the length is not what we expect, then initialize ylabel_titles to None
+            if len(self.ylabel_titles) != len_for_comparison:
                 self.ylabel_titles = None
         
+        # if ylabel_titles is none, then use sanitized filenames from input images and masks as ylabels
         if self.ylabel_titles is None:
+            # if all images are in a single row, we need a smaller number of ylabels
             if self.axisrow:
                 self.ylabel_titles.append("Images")
                 if self.masks:
