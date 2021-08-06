@@ -64,6 +64,7 @@ class FigureGenerator:
                             "Images + " + get_basename_sanitized(self.masks[i])
                         )
             else:
+                self.ylabel_titles = []
                 for i in range(len(self.images)):
                     self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
                 if self.masks:
