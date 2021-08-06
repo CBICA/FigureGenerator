@@ -25,7 +25,7 @@ args.axisrow = True
 args.boundimg = False
 args.boundmask = False
 args.borderpc = 0.1
-args.ylabels = "FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg",
+args.ylabels = ("FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg",)
 
 
 def test_download_data():
