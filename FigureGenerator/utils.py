@@ -19,6 +19,7 @@ import SimpleITK as sitk
 #     "overunder": sitk.ScalarToRGBColormapImageFilter.OverUnder,
 # }
 
+
 def get_basename_sanitized(file_name):
     """
     Get the basename of the input file, without the extension.
@@ -33,6 +34,7 @@ def get_basename_sanitized(file_name):
     if file_name.endswith(".nii.gz"):
         temp_file = file_name.replace(".nii.gz", "")
     return os.path.splitext(os.path.basename(temp_file))[0]
+
 
 def sanity_checker_base(file_reader_base, images_to_check):
     """

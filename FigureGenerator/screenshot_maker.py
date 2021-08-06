@@ -52,7 +52,7 @@ class FigureGenerator:
             # if the length is not what we expect, then initialize ylabel_titles to None
             if len(self.ylabel_titles) != len_for_comparison:
                 self.ylabel_titles = None
-        
+
         # if ylabel_titles is none, then use sanitized filenames from input images and masks as ylabels
         if self.ylabel_titles is None:
             # if all images are in a single row, we need a smaller number of ylabels
@@ -60,14 +60,20 @@ class FigureGenerator:
                 self.ylabel_titles.append("Images")
                 if self.masks:
                     for i in range(len(self.masks)):
-                        self.ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
+                        self.ylabel_titles.append(
+                            "Images + " + get_basename_sanitized(self.masks[i])
+                        )
             else:
                 for i in range(len(self.images)):
                     self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
                 if self.masks:
                     for i in range(len(self.images)):
                         for j in range(len(self.masks)):
-                            self.ylabel_titles.append(get_basename_sanitized(self.images[i]) + " + " + get_basename_sanitized(self.masks[j]))
+                            self.ylabel_titles.append(
+                                get_basename_sanitized(self.images[i])
+                                + " + "
+                                + get_basename_sanitized(self.masks[j])
+                            )
 
         self.calculate_bounds = args.boundimg
         if self.calculate_bounds:
@@ -336,10 +342,9 @@ class FigureGenerator:
             if counter == 1:
                 ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
                 ylabel_counter += 1
-            elif (counter -1) % self.layout[0] == 0:
+            elif (counter - 1) % self.layout[0] == 0:
                 ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
                 ylabel_counter += 1
-        
 
         plt.tight_layout()
         plt.savefig(os.path.join(output_file))
