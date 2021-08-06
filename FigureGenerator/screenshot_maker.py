@@ -284,8 +284,8 @@ class FigureGenerator:
 
         # next, put in the image slices blended with the masks
         if self.mask_present:
-            for image_slice in image_slices:
-                for mask_slice in mask_slices:
+            for mask_slice in mask_slices:
+                for image_slice in image_slices:
                     for i, _ in enumerate(image_slice):
 
                         mask = None
