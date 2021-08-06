@@ -26,11 +26,12 @@ pip install FigureGenerator
 
 ## Usage
 
-```powershell
+```
 python ./figure_generator -h
-usage: ScreenshotMaker [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
-                       -output OUTPUT [-axisrow AXISROW] [-boundimg BOUNDIMG]
-                       [-boundmask BOUNDMASK] [-borderpc BORDERPC] [-v]
+usage: FigureGenerator [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
+                       [-ylabels YLABELS] -output OUTPUT [-axisrow AXISROW]
+                       [-boundimg BOUNDIMG] [-boundmask BOUNDMASK]
+                       [-borderpc BORDERPC] [-v]
 
 Constructing screenshots from medical images.
 
@@ -42,8 +43,9 @@ Copyright (c) 2021 University of Pennsylvania. All rights reserved.
 optional arguments:
   -h, --help            show this help message and exit
   -images IMAGES        Input image files (comma-separated without any spaces in path and co-registered)
-  -masks MASKS          Mask files  (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth
+  -masks MASKS          Mask files (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth
   -opacity OPACITY      Mask opacity between 0-1
+  -ylabels YLABELS      The comma-separated ylabels that will be displayed on the subplots' y-axis
   -output OUTPUT        Output screenshot file
   -axisrow AXISROW      Put all axes views across each column and stack images and blends in rows, defaults to False
   -boundimg BOUNDIMG    Construct bounding box around non-zero pixels of input images

@@ -7,6 +7,7 @@ from .utils import (
     rescale_intensity,
     get_bounding_box,
     alpha_blend,
+    get_basename_sanitized,
 )
 import SimpleITK as sitk
 import numpy as np
@@ -36,6 +37,47 @@ class FigureGenerator:
         self.mask_opacity = args.opacity
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
+
+        ## this is used for y-axis in subplots
+        self.ylabel_titles = args.ylabels
+        # if ylabels have been defined, then use that but perform sanity checks
+        if self.ylabel_titles is not None:
+            self.ylabel_titles = self.ylabel_titles.split(",")
+            # the length of the ylabels needs to be appropriate based on the axisrow
+            len_for_comparison = 0
+            if self.axisrow:
+                len_for_comparison = 1 + len(self.masks)
+            else:
+                len_for_comparison = len(self.images) * (1 + len(self.masks))
+            # if the length is not what we expect, then initialize ylabel_titles to None
+            if len(self.ylabel_titles) != len_for_comparison:
+                self.ylabel_titles = None
+
+        # if ylabel_titles is none, then use sanitized filenames from input images and masks as ylabels
+        if self.ylabel_titles is None:
+            # if all images are in a single row, we need a smaller number of ylabels
+            self.ylabel_titles = []
+            if self.axisrow:
+                self.ylabel_titles.append("Images")
+                if self.masks:
+                    for i in range(len(self.masks)):
+                        self.ylabel_titles.append(
+                            "Images + " + get_basename_sanitized(self.masks[i])
+                        )
+            else:
+                # if ylabel_titles is None, initialize an empty list
+                self.ylabel_titles = []
+                for i in range(len(self.images)):
+                    self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
+                if self.masks:
+                    for i in range(len(self.images)):
+                        for j in range(len(self.masks)):
+                            self.ylabel_titles.append(
+                                get_basename_sanitized(self.images[i])
+                                + " + "
+                                + get_basename_sanitized(self.masks[j])
+                            )
+
         self.calculate_bounds = args.boundimg
         if self.calculate_bounds:
             self.border_pc = 0.001
@@ -243,8 +285,8 @@ class FigureGenerator:
 
         # next, put in the image slices blended with the masks
         if self.mask_present:
-            for image_slice in image_slices:
-                for mask_slice in mask_slices:
+            for mask_slice in mask_slices:
+                for image_slice in image_slices:
                     for i, _ in enumerate(image_slice):
 
                         mask = None
@@ -284,9 +326,12 @@ class FigureGenerator:
 
         # we only want the titles for first row
         counter = 0
+        ylabel_counter = 0
         for ax, img in zip(self.fig.axes, images_blended):
             ax.imshow(sitk.GetArrayFromImage(img))
-            ax.axis("off")
+            # ax.axis("off")
+
+            # ax.set_ylabel("test", color="white")
             counter += 1
             if counter <= self.layout[0]:
                 if counter % 3 == 1:
@@ -296,6 +341,13 @@ class FigureGenerator:
                 elif counter % 3 == 0:
                     ax.set_title("Axial")
                 ax.title.set_color("white")
+
+            if counter == 1:
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ylabel_counter += 1
+            elif (counter - 1) % self.layout[0] == 0:
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ylabel_counter += 1
 
         plt.tight_layout()
         plt.savefig(os.path.join(output_file))
