@@ -288,7 +288,7 @@ class FigureGenerator:
             ax.imshow(sitk.GetArrayFromImage(img))
             # ax.axis("off")
 
-            ax.set_ylabel("test", color="white")
+            # ax.set_ylabel("test", color="white")
             counter += 1
             if counter <= self.layout[0]:
                 if counter % 3 == 1:
@@ -298,6 +298,11 @@ class FigureGenerator:
                 elif counter % 3 == 0:
                     ax.set_title("Axial")
                 ax.title.set_color("white")
+
+            if counter == 1:
+                ax.set_ylabel("test", color="white")
+            elif (counter -1) % self.layout[0] == 0:
+                ax.set_ylabel("test", color="white")
         
 
         plt.tight_layout()
