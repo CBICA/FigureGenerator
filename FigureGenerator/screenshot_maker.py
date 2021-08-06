@@ -56,6 +56,7 @@ class FigureGenerator:
         # if ylabel_titles is none, then use sanitized filenames from input images and masks as ylabels
         if self.ylabel_titles is None:
             # if all images are in a single row, we need a smaller number of ylabels
+            self.ylabel_titles = []
             if self.axisrow:
                 self.ylabel_titles.append("Images")
                 if self.masks:
