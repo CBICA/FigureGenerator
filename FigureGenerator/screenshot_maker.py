@@ -38,12 +38,20 @@ class FigureGenerator:
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
 
-        ylabel_titles = []
+        # this is used for y-axis in subplots
+        self.ylabel_titles = []
         if self.axisrow:
-            ylabel_titles.append("Images")
+            self.ylabel_titles.append("Images")
             if self.masks:
                 for i in range(len(self.masks)):
-                    ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
+                    self.ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
+        else:
+            for i in range(len(self.images)):
+                self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
+            if self.masks:
+                for i in range(len(self.images)):
+                    for j in range(len(self.masks)):
+                        self.ylabel_titles.append(get_basename_sanitized(self.images[i]) + " + " + get_basename_sanitized(self.masks[j]))
 
         self.calculate_bounds = args.boundimg
         if self.calculate_bounds:
@@ -293,6 +301,7 @@ class FigureGenerator:
 
         # we only want the titles for first row
         counter = 0
+        ylabel_counter = 0
         for ax, img in zip(self.fig.axes, images_blended):
             ax.imshow(sitk.GetArrayFromImage(img))
             # ax.axis("off")
@@ -309,9 +318,11 @@ class FigureGenerator:
                 ax.title.set_color("white")
 
             if counter == 1:
-                ax.set_ylabel("test", color="white")
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ylabel_counter += 1
             elif (counter -1) % self.layout[0] == 0:
-                ax.set_ylabel("test", color="white")
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ylabel_counter += 1
         
 
         plt.tight_layout()
