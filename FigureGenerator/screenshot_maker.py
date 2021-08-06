@@ -7,6 +7,7 @@ from .utils import (
     rescale_intensity,
     get_bounding_box,
     alpha_blend,
+    get_basename_sanitized,
 )
 import SimpleITK as sitk
 import numpy as np
@@ -36,6 +37,14 @@ class FigureGenerator:
         self.mask_opacity = args.opacity
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
+
+        ylabel_titles = []
+        if self.axisrow:
+            ylabel_titles.append("Images")
+            if self.masks:
+                for i in range(len(self.masks)):
+                    ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
+
         self.calculate_bounds = args.boundimg
         if self.calculate_bounds:
             self.border_pc = 0.001
