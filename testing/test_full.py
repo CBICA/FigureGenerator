@@ -12,11 +12,11 @@ args = argparse.Namespace
 args.images = (
     os.path.join(inputDir, "fl.nii.gz")
     + ","
+    + os.path.join(inputDir, "t1c.nii.gz")
+    + ","
     + os.path.join(inputDir, "t1.nii.gz")
     + ","
     + os.path.join(inputDir, "t2.nii.gz")
-    + ","
-    + os.path.join(inputDir, "t1c.nii.gz")
 )
 args.masks = os.path.join(inputDir, "seg.nii.gz")
 args.output = os.path.join(inputDir, "output.png")
@@ -25,6 +25,7 @@ args.axisrow = True
 args.boundimg = False
 args.boundmask = False
 args.borderpc = 0.1
+args.ylabels = "FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg",
 
 
 def test_download_data():
