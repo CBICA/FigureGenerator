@@ -30,7 +30,7 @@ if __name__ == "__main__":
         "-masks",
         type=str,
         default=None,
-        help="Mask files  (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth",
+        help="Mask files (comma-separated without any spaces in path and co-registered with images); if multiple files are passed, first is ground truth",
         required=False,
     )
     parser.add_argument(
@@ -38,6 +38,13 @@ if __name__ == "__main__":
         type=float,
         default=0.5,
         help="Mask opacity between 0-1",
+        required=False,
+    )
+    parser.add_argument(
+        "-ylabels",
+        type=str,
+        default=None,
+        help="The comma-separated ylabels that will be displayed on the subplots' y-axis",
         required=False,
     )
     # parser.add_argument(
@@ -99,9 +106,6 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-
-    from testing.test_full import test_axis_true_bounded_mask
-    test_axis_true_bounded_mask()
 
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
