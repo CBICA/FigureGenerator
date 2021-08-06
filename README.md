@@ -28,7 +28,7 @@ pip install FigureGenerator
 
 ```
 python ./figure_generator -h
-usage: ScreenshotMaker [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
+usage: FigureGenerator [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
                        [-ylabels YLABELS] -output OUTPUT [-axisrow AXISROW]
                        [-boundimg BOUNDIMG] [-boundmask BOUNDMASK]
                        [-borderpc BORDERPC] [-v]

@@ -15,7 +15,7 @@ if __name__ == "__main__":
         + " University of Pennsylvania. All rights reserved."
     )
     parser = argparse.ArgumentParser(
-        prog="ScreenshotMaker",
+        prog="FigureGenerator",
         formatter_class=argparse.RawTextHelpFormatter,
         description="Constructing screenshots from medical images.\n\n"
         + copyrightMessage,
