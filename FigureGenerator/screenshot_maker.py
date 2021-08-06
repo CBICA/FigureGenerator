@@ -39,19 +39,25 @@ class FigureGenerator:
         self.axisrow = args.axisrow
 
         # this is used for y-axis in subplots
-        self.ylabel_titles = []
-        if self.axisrow:
-            self.ylabel_titles.append("Images")
-            if self.masks:
-                for i in range(len(self.masks)):
-                    self.ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
-        else:
-            for i in range(len(self.images)):
-                self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
-            if self.masks:
+        self.ylabel_titles = args.ylabels
+        if self.ylabel_titles is not None:
+            self.ylabel_titles = self.ylabel_titles.split(",")
+            if len(self.ylabel_titles) != len(self.images) * (1 + len(self.masks)):
+                self.ylabel_titles = None
+        
+        if self.ylabel_titles is None:
+            if self.axisrow:
+                self.ylabel_titles.append("Images")
+                if self.masks:
+                    for i in range(len(self.masks)):
+                        self.ylabel_titles.append("Images + " + get_basename_sanitized(self.masks[i]))
+            else:
                 for i in range(len(self.images)):
-                    for j in range(len(self.masks)):
-                        self.ylabel_titles.append(get_basename_sanitized(self.images[i]) + " + " + get_basename_sanitized(self.masks[j]))
+                    self.ylabel_titles.append(get_basename_sanitized(self.images[i]))
+                if self.masks:
+                    for i in range(len(self.images)):
+                        for j in range(len(self.masks)):
+                            self.ylabel_titles.append(get_basename_sanitized(self.images[i]) + " + " + get_basename_sanitized(self.masks[j]))
 
         self.calculate_bounds = args.boundimg
         if self.calculate_bounds:
