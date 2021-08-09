@@ -30,7 +30,8 @@ pip install FigureGenerator
 python ./figure_generator -h
 usage: FigureGenerator [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
                        [-ylabels YLABELS] -output OUTPUT [-axisrow AXISROW]
-                       [-boundtype BOUNDTYPE] [-borderpc BORDERPC] [-v]
+                       [-boundtype BOUNDTYPE] [-fontsize FONTSIZE]
+                       [-borderpc BORDERPC] [-v]
 
 Constructing screenshots from medical images.
 
@@ -48,6 +49,7 @@ optional arguments:
   -output OUTPUT        Output screenshot file
   -axisrow AXISROW      Put all axes views across each column and stack images and blends in rows, defaults to False
   -boundtype BOUNDTYPE  Construct bounding box around specified region; can be 'none, image or mask'
+  -fontsize FONTSIZE    Font size for all text on the figure
   -borderpc BORDERPC    Percentage of size to use as border around bounding box (used only when mask and bounded are defined)
   -v, --version         Show program's version number and exit.
 ```
