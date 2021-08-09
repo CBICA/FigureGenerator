@@ -83,6 +83,13 @@ if __name__ == "__main__":
         required=False,
     )
     parser.add_argument(
+        "-fontsize",
+        type=int,
+        default=15,
+        help="Font size for all text on the figure",
+        required=False,
+    )
+    parser.add_argument(
         "-borderpc",
         type=float,
         default=0.05,
@@ -99,6 +106,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    from testing.test_full import test_axis_true_bounded_image
+    test_axis_true_bounded_image()
 
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
