@@ -23,6 +23,7 @@ args.opacity = 0.5
 args.axisrow = True
 args.boundtype = "none"
 args.borderpc = 0.1
+args.fontsize = 20
 args.ylabels = "FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg"
 
 

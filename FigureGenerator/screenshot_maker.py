@@ -37,6 +37,7 @@ class FigureGenerator:
         self.mask_opacity = args.opacity
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
+        self.font_size = args.fontsize
 
         ## this is used for y-axis in subplots
         self.ylabel_titles = args.ylabels
@@ -345,6 +346,7 @@ class FigureGenerator:
                 "savefig.edgecolor": "black",
             }
         )
+        plt.rc('font', size=self.font_size)
 
         # we only want the titles for first row
         counter = 0
@@ -365,10 +367,10 @@ class FigureGenerator:
                 ax.title.set_color("white")
 
             if counter == 1:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white", size=self.font_size)
                 ylabel_counter += 1
             elif (counter - 1) % self.layout[0] == 0:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white", size=self.font_size)
                 ylabel_counter += 1
 
         plt.tight_layout()
