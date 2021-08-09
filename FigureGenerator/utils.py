@@ -212,22 +212,22 @@ def binarize_image(image):
     return thresholder.Execute(image)
 
 
-def get_bounding_box(image, mask_list, border_pc):
+def get_bounding_box(image, mask, border_pc):
     """
     Get the bounding box of the image based on the first mask after it is binarized.
 
     Args:
         image (SimpleITK.Image): The input image.
-        mask_list (list of SimpleITK.Image): The list of masks.
+        mask (SimpleITK.Image): The ground truth mask.
         border_pc (float): The percentage of the image size to consider as the border.
 
     Returns:
         list: The bounding box in the form of [x_min, x_max, y_min, y_max, z_min, z_max]
     """
     size = image.GetSize()
-    if mask_list is not None:
+    if mask is not None:
         extractor = sitk.LabelStatisticsImageFilter()
-        extractor.Execute(image, binarize_image(mask_list[0]))
+        extractor.Execute(image, binarize_image(mask))
         bb = list(extractor.GetBoundingBox(1))
         bb[0] = max(0, math.floor(bb[0] - border_pc * size[0]))
         bb[2] = max(0, math.floor(bb[2] - border_pc * size[1]))

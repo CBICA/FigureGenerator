@@ -37,6 +37,7 @@ class FigureGenerator:
         self.mask_opacity = args.opacity
         self.border_pc = args.borderpc
         self.axisrow = args.axisrow
+        self.font_size = args.fontsize
 
         ## this is used for y-axis in subplots
         self.ylabel_titles = args.ylabels
@@ -78,21 +79,47 @@ class FigureGenerator:
                                 + get_basename_sanitized(self.masks[j])
                             )
 
-        self.calculate_bounds = args.boundimg
+        # deduce bounding type
+        self.calculate_bounds = args.boundtype.lower()
+        if self.calculate_bounds in ["image", "img"]:
+            self.calculate_bounds = True
+            self.calculate_bounds_mask = False
+        elif self.calculate_bounds in ["mask", "msk"]:
+            self.calculate_bounds_mask = True
+            self.calculate_bounds = False
+            if not (self.mask_present):
+                raise ValueError(
+                    "If mask is not provided, then boundtype must be 'image'"
+                )
+        else:
+            self.calculate_bounds = False
+            self.calculate_bounds_mask = False
+
+        # do not let border get below 0.001% of the image if bounding type is image
         if self.calculate_bounds:
-            self.border_pc = 0.001
-        self.calculate_bounds_mask = args.boundmask
+            self.border_pc = min(0.001, self.border_pc)
         if self.calculate_bounds and self.calculate_bounds_mask:
             print(
                 "WARNING: Both image and mask bounding cannot be enabled, using only image bounding."
             )
             self.calculate_bounds_mask = False
+
+        # if a file is not present in output, use a default value
         self.output = args.output
         _, ext = os.path.splitext(self.output)
         if ext == "" or ext is None:
             pathlib.Path(self.output).mkdir(parents=True, exist_ok=True)
             self.output = os.path.join(self.output, "screenshot.png")
+            # if screenshot exists before, then do not overwrite
+            if os.path.exists(self.output):
+                print(
+                    "Default output file was existing before, using process ID to ensure overwriting does not occur"
+                )
+                self.output = os.path.join(
+                    self.output, "screenshot_" + os.getpid() + ".png"
+                )
 
+        # adjust the layout for plotting
         if self.axisrow:
             self.layout = (3 * len(self.images), 1 + len(self.masks), 0)
         else:
@@ -135,11 +162,11 @@ class FigureGenerator:
         ## 3d-specific calculations start here.
         if self.calculate_bounds:
             bounding_box = get_bounding_box(
-                input_images[0], [input_images[0]], self.border_pc
+                input_images[0], input_images[0], self.border_pc
             )
         elif self.calculate_bounds_mask:
             bounding_box = get_bounding_box(
-                input_images[0], input_masks, self.border_pc
+                input_images[0], input_masks[0], self.border_pc
             )
         else:
             bounding_box = get_bounding_box(input_images[0], None, None)
@@ -323,6 +350,7 @@ class FigureGenerator:
                 "savefig.edgecolor": "black",
             }
         )
+        plt.rc("font", size=self.font_size)
 
         # we only want the titles for first row
         counter = 0
@@ -343,10 +371,18 @@ class FigureGenerator:
                 ax.title.set_color("white")
 
             if counter == 1:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ax.set_ylabel(
+                    self.ylabel_titles[ylabel_counter],
+                    color="white",
+                    size=self.font_size,
+                )
                 ylabel_counter += 1
             elif (counter - 1) % self.layout[0] == 0:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white")
+                ax.set_ylabel(
+                    self.ylabel_titles[ylabel_counter],
+                    color="white",
+                    size=self.font_size,
+                )
                 ylabel_counter += 1
 
         plt.tight_layout()

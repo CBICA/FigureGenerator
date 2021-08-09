@@ -21,9 +21,9 @@ args.masks = os.path.join(inputDir, "seg.nii.gz")
 args.output = os.path.join(inputDir, "output.png")
 args.opacity = 0.5
 args.axisrow = True
-args.boundimg = False
-args.boundmask = False
+args.boundtype = "none"
 args.borderpc = 0.1
+args.fontsize = 20
 args.ylabels = "FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg"
 
 
@@ -72,7 +72,7 @@ def test_axis_true_bounded_image():
     if os.path.exists(args.output):
         os.remove(args.output)
     args.axisrow = True
-    args.boundimg = True
+    args.boundtype = "image"
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedimage.png")
@@ -88,7 +88,7 @@ def test_axis_true_bounded_mask():
     if os.path.exists(args.output):
         os.remove(args.output)
     args.axisrow = True
-    args.boundmask = True
+    args.boundtype = "mask"
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
     file_to_check = os.path.join(baseImagesDir, "fig_axisrowtrue_boundedmask.png")

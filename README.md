@@ -30,7 +30,7 @@ pip install FigureGenerator
 python ./figure_generator -h
 usage: FigureGenerator [-h] -images IMAGES [-masks MASKS] [-opacity OPACITY]
                        [-ylabels YLABELS] -output OUTPUT [-axisrow AXISROW]
-                       [-boundimg BOUNDIMG] [-boundmask BOUNDMASK]
+                       [-boundtype BOUNDTYPE] [-fontsize FONTSIZE]
                        [-borderpc BORDERPC] [-v]
 
 Constructing screenshots from medical images.
@@ -48,8 +48,8 @@ optional arguments:
   -ylabels YLABELS      The comma-separated ylabels that will be displayed on the subplots' y-axis
   -output OUTPUT        Output screenshot file
   -axisrow AXISROW      Put all axes views across each column and stack images and blends in rows, defaults to False
-  -boundimg BOUNDIMG    Construct bounding box around non-zero pixels of input images
-  -boundmask BOUNDMASK  Construct bounding box around binarized ground truth
+  -boundtype BOUNDTYPE  Construct bounding box around specified region; can be 'none, image or mask'
+  -fontsize FONTSIZE    Font size for all text on the figure
   -borderpc BORDERPC    Percentage of size to use as border around bounding box (used only when mask and bounded are defined)
   -v, --version         Show program's version number and exit.
 ```
@@ -95,7 +95,7 @@ python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow True \
--bounded True \
+-boundtype image \
 -output C:/input/fig.png 
 ```
 Gives the following output:
@@ -113,7 +113,7 @@ python ./figure_generator \
 -images C:/input/subject_001_flair.nii.gz,C:/input/subject_001_t1ce.nii.gz,C:/input/subject_001_t1.nii.gz,C:/input/subject_001_t2.nii.gz \
 -masks C:/input/subject_001_seg.nii.gz \
 -axisrow True \
--boundmask True \
+-boundtype mask \
 -borderpc 0.001 \
 -output C:/input/fig.png 
 ```

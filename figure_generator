@@ -76,17 +76,17 @@ if __name__ == "__main__":
         required=False,
     )
     parser.add_argument(
-        "-boundimg",
-        type=ast.literal_eval,
-        default=False,
-        help="Construct bounding box around non-zero pixels of input images",
+        "-boundtype",
+        type=str,
+        default="None",
+        help="Construct bounding box around specified region; can be 'none, image or mask'",
         required=False,
     )
     parser.add_argument(
-        "-boundmask",
-        type=ast.literal_eval,
-        default=False,
-        help="Construct bounding box around binarized ground truth",
+        "-fontsize",
+        type=int,
+        default=15,
+        help="Font size for all text on the figure",
         required=False,
     )
     parser.add_argument(
