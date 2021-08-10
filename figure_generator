@@ -107,9 +107,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    from testing.test_full import test_axis_true_bounded_image
-    test_axis_true_bounded_image()
-
     fig_generator = FigureGenerator(args)
     fig_generator.save_image(fig_generator.output)
 

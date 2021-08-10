@@ -87,7 +87,7 @@ class FigureGenerator:
         elif self.calculate_bounds in ["mask", "msk"]:
             self.calculate_bounds_mask = True
             self.calculate_bounds = False
-            if not(self.mask_present):
+            if not (self.mask_present):
                 raise ValueError(
                     "If mask is not provided, then boundtype must be 'image'"
                 )
@@ -103,7 +103,7 @@ class FigureGenerator:
                 "WARNING: Both image and mask bounding cannot be enabled, using only image bounding."
             )
             self.calculate_bounds_mask = False
-        
+
         # if a file is not present in output, use a default value
         self.output = args.output
         _, ext = os.path.splitext(self.output)
@@ -112,8 +112,12 @@ class FigureGenerator:
             self.output = os.path.join(self.output, "screenshot.png")
             # if screenshot exists before, then do not overwrite
             if os.path.exists(self.output):
-                print("Default output file was existing before, using process ID to ensure overwriting does not occur")
-                self.output = os.path.join(self.output, "screenshot_" + os.getpid() + ".png")
+                print(
+                    "Default output file was existing before, using process ID to ensure overwriting does not occur"
+                )
+                self.output = os.path.join(
+                    self.output, "screenshot_" + os.getpid() + ".png"
+                )
 
         # adjust the layout for plotting
         if self.axisrow:
@@ -346,7 +350,7 @@ class FigureGenerator:
                 "savefig.edgecolor": "black",
             }
         )
-        plt.rc('font', size=self.font_size)
+        plt.rc("font", size=self.font_size)
 
         # we only want the titles for first row
         counter = 0
@@ -367,10 +371,18 @@ class FigureGenerator:
                 ax.title.set_color("white")
 
             if counter == 1:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white", size=self.font_size)
+                ax.set_ylabel(
+                    self.ylabel_titles[ylabel_counter],
+                    color="white",
+                    size=self.font_size,
+                )
                 ylabel_counter += 1
             elif (counter - 1) % self.layout[0] == 0:
-                ax.set_ylabel(self.ylabel_titles[ylabel_counter], color="white", size=self.font_size)
+                ax.set_ylabel(
+                    self.ylabel_titles[ylabel_counter],
+                    color="white",
+                    size=self.font_size,
+                )
                 ylabel_counter += 1
 
         plt.tight_layout()
