@@ -20,8 +20,8 @@ except Exception as error:
     sys.stderr.write("Warning: Could not open '%s' due %s\n" % (filepath, error))
 
 requirements = [
-    "numpy==1.19.2",
-    "SimpleITK==2.1.0",
+    "numpy>=1.19.2",
+    "SimpleITK>=2.1.0",
     "pytest",
     "coverage",
     "psutil",
