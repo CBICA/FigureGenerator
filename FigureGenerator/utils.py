@@ -282,4 +282,4 @@ def alpha_blend(image, mask=None, alpha=0.5):
     filter_overlay.SetOpacity(alpha)
     # filter_overlay.SetBackgroundValue(0)
     # filter_overlay.SetColormap(r+g+b)
-    return filter_overlay.Execute(sitk.Cast(image, sitk.sitkUInt8), mask)
+    return filter_overlay.Execute(sitk.Cast(image, sitk.sitkUInt8), sitk.Cast(mask, sitk.sitkUInt8))
