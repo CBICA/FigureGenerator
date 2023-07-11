@@ -28,6 +28,9 @@ class FigureGenerator:
         else:
             self.masks = []
 
+        self.flip_sagittal = args.flip_sagittal
+        self.flip_coronal = args.flip_coronal
+        self.flip_axial = args.flip_axial
         # initialize members
         ## not using slice because it's calculation after resampling is a pain
         # if args.slice is not None:
@@ -88,9 +91,7 @@ class FigureGenerator:
             self.calculate_bounds_mask = True
             self.calculate_bounds = False
             if not (self.mask_present):
-                print(
-                    "If mask is not provided, then boundtype must be 'image'"
-                )
+                print("If mask is not provided, then boundtype must be 'image'")
                 self.calculate_bounds = True
                 self.calculate_bounds_mask = False
         else:
@@ -264,7 +265,9 @@ class FigureGenerator:
             # if mask is not defined, pick the middle of the array
             max_id = (
                 np.around(
-                    np.true_divide(sitk.GetArrayFromImage(self.input_images_bounded[0]).shape, 2)
+                    np.true_divide(
+                        sitk.GetArrayFromImage(self.input_images_bounded[0]).shape, 2
+                    )
                 )
                 .astype(int)
                 .tolist()
@@ -289,9 +292,11 @@ class FigureGenerator:
                 current_image_slices.append(image[self.max_id[0], :])
                 current_image_slices.append(image[:, self.max_id[1]])
             else:
-                current_image_slices.append(image[self.max_id[0], :, :])
-                current_image_slices.append(image[:, self.max_id[1], :])
-                current_image_slices.append(image[:, :, self.max_id[2]])
+                flip_values = [self.flip_sagittal, self.flip_coronal, self.flip_axial]
+                flipped_image = sitk.Flip(image, flip_values)
+                current_image_slices.append(flipped_image[self.max_id[0], :, :])
+                current_image_slices.append(flipped_image[:, self.max_id[1], :])
+                current_image_slices.append(flipped_image[:, :, self.max_id[2]])
             output_slices.append(current_image_slices)
         return output_slices
 
@@ -401,6 +406,9 @@ def figure_generator(
     axisrow: bool = False,
     fontsize: int = 15,
     boundtype: str = "None",
+    flip_sagittal: bool = False,
+    flip_coronal: bool = False,
+    flip_axial: bool = False,
 ) -> None:
     """
     This is a functional interface to the class :class:`FigureGenerator`. It takes in the same arguments as the class and generates the figure.
@@ -415,6 +423,9 @@ def figure_generator(
         axisrow (bool, optional): Whether to show the axis row. Defaults to False.
         fontsize (int, optional): The fontsize of the figure. Defaults to 15.
         boundtype (str, optional): The type of bounding. Can be "image" or "mask". Defaults to "image".
+        flip_sagittal (bool, optional): Whether to flip the sagittal image. Defaults to False.
+        flip_coronal (bool, optional): Whether to flip the coronal image. Defaults to False.
+        flip_axial (bool, optional): Whether to flip the axial image. Defaults to False.
     """
     assert len(input_images.split(",")) == len(
         ylabels.split(",")
@@ -432,5 +443,8 @@ def figure_generator(
     args_for_fig_gen.fontsize = fontsize
     args_for_fig_gen.boundtype = boundtype
     args_for_fig_gen.output = output
+    args_for_fig_gen.flip_sagittal = flip_sagittal
+    args_for_fig_gen.flip_coronal = flip_coronal
+    args_for_fig_gen.flip_axial = flip_axial
     fig_generator = FigureGenerator(args_for_fig_gen)
     fig_generator.save_image(args_for_fig_gen.output)
