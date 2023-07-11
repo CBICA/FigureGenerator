@@ -88,9 +88,11 @@ class FigureGenerator:
             self.calculate_bounds_mask = True
             self.calculate_bounds = False
             if not (self.mask_present):
-                raise ValueError(
+                print(
                     "If mask is not provided, then boundtype must be 'image'"
                 )
+                self.calculate_bounds = True
+                self.calculate_bounds_mask = False
         else:
             self.calculate_bounds = False
             self.calculate_bounds_mask = False
@@ -262,7 +264,7 @@ class FigureGenerator:
             # if mask is not defined, pick the middle of the array
             max_id = (
                 np.around(
-                    np.true_divide(np.array(self.input_images_bounded)[0].shape, 2)
+                    np.true_divide(sitk.GetArrayFromImage(self.input_images_bounded[0]).shape, 2)
                 )
                 .astype(int)
                 .tolist()
@@ -398,7 +400,7 @@ def figure_generator(
     borderpc: float = 0.05,
     axisrow: bool = False,
     fontsize: int = 15,
-    boundtype: str = "image",
+    boundtype: str = "None",
 ) -> None:
     """
     This is a functional interface to the class :class:`FigureGenerator`. It takes in the same arguments as the class and generates the figure.
@@ -422,6 +424,7 @@ def figure_generator(
     # save the screenshot
     args_for_fig_gen = argparse.ArgumentParser()
     args_for_fig_gen.images = input_images
+    args_for_fig_gen.masks = input_mask
     args_for_fig_gen.ylabels = ylabels
     args_for_fig_gen.opacity = opacity
     args_for_fig_gen.borderpc = borderpc
