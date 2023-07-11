@@ -1,7 +1,7 @@
 from pathlib import Path
 import requests, zipfile, io, os, argparse
 
-from FigureGenerator.screenshot_maker import FigureGenerator
+from FigureGenerator.screenshot_maker import FigureGenerator, figure_generator
 from FigureGenerator.utils import sanity_checker_with_files
 
 ## global variables
@@ -25,6 +25,9 @@ args.boundtype = "none"
 args.borderpc = 0.1
 args.fontsize = 20
 args.ylabels = "FL,T1C,T1,T2,FL+seg,T1C+seg,T1+seg,T2+seg"
+args_for_fig_gen.flip_sagittal = False
+args_for_fig_gen.flip_coronal = False
+args_for_fig_gen.flip_axial = False
 
 
 def test_download_data():
@@ -98,3 +101,9 @@ def test_axis_true_bounded_mask():
 
     os.remove(args.output)
     print("Passed")
+
+
+def test_functional_interface():
+    if os.path.exists(args.output):
+        os.remove(args.output)
+    figure_generator(args.images,"FL,T1C,T1,T2",args.output)
