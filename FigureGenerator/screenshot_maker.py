@@ -26,7 +26,7 @@ class FigureGenerator:
             self.masks = args.masks.split(",")
             self.mask_present = True
         else:
-            self.masks = None
+            self.masks = []
 
         # initialize members
         ## not using slice because it's calculation after resampling is a pain
@@ -262,7 +262,7 @@ class FigureGenerator:
             self.input_masks_bounded = None
             # if mask is not defined, pick the middle of the array
             max_id = (
-                np.around(np.true_divide(self.input_images_bounded[0].shape, 2))
+                np.around(np.true_divide(np.array(self.input_images_bounded)[0].shape, 2))
                 .astype(int)
                 .tolist()
             )
