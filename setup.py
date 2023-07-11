@@ -57,4 +57,5 @@ setup(
     include_package_data=True,
     keywords="medical-imaging, screenshot, figure-generator, publication",
     zip_safe=False,
+    url="https://github.com/CBICA/FigureGenerator",
 )
