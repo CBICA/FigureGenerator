@@ -21,7 +21,8 @@ except Exception as error:
 
 requirements = [
     "numpy>=1.19.2",
-    "SimpleITK>=2.1.0",
+    "SimpleITK!=2.0.*",
+    "SimpleITK!=2.2.1",  # https://github.com/mlcommons/GaNDLF/issues/536
     "pytest",
     "coverage",
     "psutil",
