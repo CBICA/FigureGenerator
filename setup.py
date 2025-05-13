@@ -37,7 +37,7 @@ setup(
     version=__version__,
     author="Sarthak Pati",  # alphabetical order
     author_email="software@cbica.upenn.edu",
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     packages=find_packages(),
     scripts=["figure_generator"],
     classifiers=[
