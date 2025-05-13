@@ -29,6 +29,7 @@ requirements = [
     "black",
     "matplotlib",
     "requests",
+    "setuptools",
 ]
 
 setup(
