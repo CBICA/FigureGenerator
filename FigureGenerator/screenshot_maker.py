@@ -16,6 +16,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# check logic in https://github.com/pyushkevich/upenn_be5370_utils/blob/main/upenn_be5370_utils/sitkview.py
+
+
 class FigureGenerator:
     def __init__(self, args):
         # change comma-separated string to list for images and masks

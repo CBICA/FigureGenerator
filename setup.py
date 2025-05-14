@@ -29,6 +29,7 @@ requirements = [
     "black",
     "matplotlib",
     "requests",
+    "setuptools",
 ]
 
 setup(
@@ -36,7 +37,7 @@ setup(
     version=__version__,
     author="Sarthak Pati",  # alphabetical order
     author_email="software@cbica.upenn.edu",
-    python_requires=">=3.6",
+    python_requires=">=3.9",
     packages=find_packages(),
     scripts=["figure_generator"],
     classifiers=[
@@ -45,9 +46,9 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     description=("Making screenshots for presentations and manuscripts."),
     install_requires=requirements,
